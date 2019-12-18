@@ -1,0 +1,26 @@
+<mat-sidenav-container [hasBackdrop]="false">
+  <mat-sidenav
+    *ngIf="menuItems"
+    #drawer
+    class="sidenav"
+    [opened]="true"
+    [mode]="'side'"
+  >
+    <mat-nav-list>
+      <a
+        href="#"
+        mat-list-item
+        [class.item-active]="activeItem === menu.value ? 'active' : null"
+        (click)="onMenuClick(menu); (false)"
+        *ngFor="let menu of menuItems"
+      >
+        <mat-icon [matTooltip]="menu.title" [matTooltipPosition]="'right'">{{
+          menu.icon
+        }}</mat-icon>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

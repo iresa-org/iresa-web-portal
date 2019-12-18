@@ -1,0 +1,28 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "rootDir": ".",
+    "sourceMap": true,
+    "declaration": false,
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es2015",
+    "module": "esnext",
+    "typeRoots": ["node_modules/@types"],
+    "lib": ["es2017", "dom"],
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "baseUrl": ".",
+    "paths": {
+      "@iresa/ngx-spotify": ["libs/ngx-spotify/src/index.ts"],
+      "@iresa/shared/ui": ["libs/shared/ui/src/index.ts"],
+      "@iresa/web-portal-data": ["libs/web-portal-data/src/index.ts"],
+      "@iresa/shared/utilities": ["libs/shared/utilities/src/index.ts"],
+      "@iresa/web-portal/env": ["apps/web-portal/src/environments/environment"],
+      "@iresa/firestore": ["libs/firestore/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

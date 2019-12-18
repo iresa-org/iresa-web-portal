@@ -1,0 +1,88 @@
+<mat-card fxLayout="row" fxLayoutAlign="space-between center">
+  <div
+    fxFlex="22"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+    fxLayoutGap="20px"
+    class="player-current-song-info"
+  >
+    <div class="song-image">
+      <img
+        *ngIf="currPlaying$ | async as curr"
+        [src]="curr.images | loadImage"
+        [alt]="curr?.name"
+        [title]="curr?.name"
+      />
+    </div>
+    <div
+      class="song-name"
+      [matTooltip]="(currPlaying$ | async)?.name"
+      [matTooltipPosition]="'above'"
+    >
+      {{ (currPlaying$ | async)?.name }}
+    </div>
+  </div>
+
+  <div class="player-controls" fxLayout="row" fxLayoutAlign="start center">
+    <button mat-icon-button (click)="prev()">
+      <mat-icon color="accent" role="img">fast_rewind</mat-icon>
+    </button>
+    <button
+      class="player-button mat-primary"
+      mat-mini-fab
+      color="primary"
+      (click)="togglePlay()"
+    >
+      <mat-icon
+        *ngIf="(playingState$ | async) === false"
+        aria-label="Resume / Play"
+        >play_arrow</mat-icon
+      >
+      <mat-icon *ngIf="playingState$ | async" aria-label="Pause"
+        >pause</mat-icon
+      >
+    </button>
+    <button mat-icon-button (click)="next()">
+      <mat-icon aria-label="Next" color="accent" aria-hidden="true"
+        >fast_forward</mat-icon
+      >
+    </button>
+  </div>
+
+  <div
+    class="player-secondary-controls"
+    fxLayoutGap="10px"
+    fxLayout="row"
+    fxLayoutAlign="start center"
+  >
+    <a
+      class="player-volume"
+      [routerLink]="['/queue']"
+      [routerLinkActive]="'link-active'"
+      (click)="openQueue()"
+    >
+      <mat-icon
+        aria-label="Queue"
+        [matTooltip]="'Queue'"
+        [matTooltipPosition]="'above'"
+        >queue_music</mat-icon
+      >
+    </a>
+    <button mat-icon-button (click)="toggleMute()">
+      <mat-icon
+        class="mat-primary"
+        [matTooltip]="(vol$ | async) === 0 ? 'Unmute' : 'Mute'"
+        [matTooltipPosition]="'above'"
+        aria-label="Volume"
+        >{{ vol$ | async | volClass }}</mat-icon
+      >
+    </button>
+    <mat-slider
+      min="0"
+      max="1"
+      step="0.2"
+      [value]="vol$ | async"
+      (change)="onSliderChange($event)"
+    ></mat-slider>
+  </div>
+</mat-card>

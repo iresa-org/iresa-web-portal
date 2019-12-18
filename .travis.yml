@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+  - "11.0"
+before_script:
+  - npm install -g @angular/cli
+  - git fetch origin master
+script:
+  - npm install
+  - npm run build:app
+deploy:
+  skip_cleanup: true
+  provider: firebase
+  token:
+    secure: $FIREBASE_TOKEN
+  on:	
+    branch: master
