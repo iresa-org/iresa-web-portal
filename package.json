@@ -6,7 +6,7 @@
     "ng": "ng",
     "nx": "nx",
     "start": "ng serve",
-    "build": "ng build --prod",
+    "build": "ng build --prod --base-href 'https://kxbui.github.io/iresa-web-portal/'",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
@@ -26,7 +26,8 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "build:app": "run-p lint build"
+    "build:app": "run-p lint build",
+    "deploy": "gh-pages -d dist/apps/web-portal"
   },
   "private": true,
   "dependencies": {

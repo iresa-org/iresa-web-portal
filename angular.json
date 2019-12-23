@@ -23,7 +23,8 @@
             "aot": false,
             "assets": [
               "apps/web-portal/src/favicon.ico",
-              "apps/web-portal/src/assets"
+              "apps/web-portal/src/assets",
+              "apps/web-portal/src/404.html"
             ],
             "styles": [
               "libs/shared/ui/scss/_variable.scss",
