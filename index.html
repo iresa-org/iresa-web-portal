@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <title>Iresa Web Portal</title>
-    <base href="'https://kxbui.github.io/iresa-web-portal/'">
+    <base href="https://kxbui.github.io/iresa-web-portal/">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
     <link
@@ -16,6 +16,16 @@
     />
     <!-- Include the Web Playback SDK -->
     <!--script src="https://sdk.scdn.co/spotify-player.js"></script-->
+    <script>
+      // See http://www.backalleycoder.com/2016/05/13/sghpa-the-single-page-app-hack-for-github-pages/
+      (function(){
+        var redirect = sessionStorage.redirect;
+        delete sessionStorage.redirect;
+        if (redirect && redirect != location.href) {
+          history.replaceState(null, null, redirect);
+        }
+      })();
+    </script>
   <link rel="stylesheet" href="styles.4b75ce1a37ce25cf2758.css"></head>
   <body>
     <iresa-portal-root></iresa-portal-root>
