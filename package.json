@@ -6,7 +6,7 @@
     "ng": "ng",
     "nx": "nx",
     "start": "ng serve",
-    "build": "ng build --prod --base-href 'https://kxbui.github.io/iresa-web-portal/'",
+    "build": "ng build --prod --base-href https://kxbui.github.io/iresa-web-portal/",
     "test": "ng test",
     "lint": "nx workspace-lint && ng lint",
     "e2e": "ng e2e",
