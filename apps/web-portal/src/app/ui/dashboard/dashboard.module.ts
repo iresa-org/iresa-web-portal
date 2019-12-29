@@ -4,7 +4,6 @@ import { DashboardComponent } from './dashboard.component';
 import { SideNavModule, HeaderModule, LoaderModule } from '@iresa/shared/ui';
 import {
   DashboardDataModule,
-  WebPlaybackDataModule,
   AuthGuardServiceGuard,
   AuthDataModule
 } from '@iresa/web-portal-data';
@@ -81,14 +80,6 @@ const routes: Routes = [
             m => m.StationDetailsModule
           )
       },
-      {
-        path: 'poll-result',
-        pathMatch: 'full',
-        loadChildren: () =>
-          import('../poll-result/poll-result.module').then(
-            m => m.PollResultModule
-          )
-      },
       { path: '', redirectTo: '/home', pathMatch: 'full' }
     ]
   }
@@ -103,7 +94,6 @@ const routes: Routes = [
     HeaderModule,
     MusicSearchModule,
     MusicPlayerModule,
-    WebPlaybackDataModule,
     LoaderModule,
     AuthDataModule,
     RouterModule.forChild(routes)

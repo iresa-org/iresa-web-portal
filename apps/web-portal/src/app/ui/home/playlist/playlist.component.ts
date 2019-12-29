@@ -24,6 +24,6 @@ export class PlaylistComponent implements OnInit {
   ngOnInit() {}
 
   onPlaylistClick(playlist) {
-    this.router.navigate(['/playlist-tracks', playlist.recordId]);
+    this.router.navigate(['/playlist-tracks', playlist.id]);
   }
 }

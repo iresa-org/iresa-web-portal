@@ -22,7 +22,7 @@ export class PlaylistTracksResolver implements Resolve<any> {
   }
 
   waitForDataToLoad(): Observable<any> {
-    return this.playlistFacade.loaded$.pipe(
+    return this.playlistFacade.tracksLoaded$.pipe(
       filter(loaded => !!loaded),
       take(1)
     );

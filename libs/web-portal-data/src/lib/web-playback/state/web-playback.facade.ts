@@ -36,14 +36,6 @@ export class WebPlaybackFacade {
     this.store.dispatch(new fromWebPlaybackActions.Prev());
   }
 
-  refreshQueue() {
-    this.store.dispatch(new fromWebPlaybackActions.RefreshQueue());
-  }
-
-  updateRemoteQueue(data) {
-    this.store.dispatch(new fromWebPlaybackActions.UpdateRemoteQueue(data));
-  }
-
   toggleMute() {
     this.store.dispatch(new fromWebPlaybackActions.ToggleMute());
   }

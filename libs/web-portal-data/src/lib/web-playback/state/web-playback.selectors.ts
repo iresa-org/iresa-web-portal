@@ -8,11 +8,6 @@ const getWebPlaybackState = createFeatureSelector<WebPlaybackState>(
   WEB_PLAYBACK_FEATURE_KEY
 );
 
-const getLoggedIn = createSelector(
-  getWebPlaybackState,
-  (state: WebPlaybackState) => state.loggedIn
-);
-
 const getQueue = createSelector(
   getWebPlaybackState,
   (state: WebPlaybackState) => state.queue
@@ -48,7 +43,6 @@ const getPosition = createSelector(
 );
 
 export const webPlaybackQuery = {
-  getLoggedIn,
   getQueue,
   getPlaying,
   getCurrTrack,

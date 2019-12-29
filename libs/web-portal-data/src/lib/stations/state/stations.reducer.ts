@@ -64,6 +64,13 @@ export function reducer(
       };
       break;
     }
+    case StationsActionTypes.UpdateStationDetails: {
+      state = {
+        ...state,
+        stationDetails: { ...state.stationDetails, ...action.payload }
+      };
+      break;
+    }
   }
   return state;
 }

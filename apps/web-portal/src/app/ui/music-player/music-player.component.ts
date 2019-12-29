@@ -17,7 +17,6 @@ import {
 import { SubSink } from 'subsink';
 import { filter, skip } from 'rxjs/operators';
 import { MatSliderChange } from '@angular/material';
-import { BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
 
 declare var Spotify: any;
@@ -40,7 +39,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     private ngZone: NgZone,
     private slService: ScriptLoaderService,
     private wpFacade: WebPlaybackFacade,
-    private plFacade: PlaylistsFacade,
     private router: Router,
     private dbFacade: DashboardFacade
   ) {}
@@ -97,7 +95,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   onEndOfQueue() {
     this.subs.add(
       this.wpFacade.endOfQueue$.pipe(filter(s => !!s)).subscribe(track => {
-        this.wpFacade.refreshQueue();
+        // this.wpFacade.refreshQueue();
       })
     );
   }
@@ -111,7 +109,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
           const device_id = this.musicPlayerCtrl.device_id;
           const URIs = [track.uri];
           this.wpFacade.play({ authToken, device_id, URIs });
-          this.wpFacade.updateRemoteQueue(track);
+          // this.wpFacade.updateRemoteQueue(track);
         })
     );
   }
@@ -129,7 +127,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   onQueueUpdate() {
     this.subs.add(
       this.wpFacade.queue$.pipe(filter(q => q.length > 0)).subscribe(q => {
-        this.plFacade.refreshSongList();
+        // this.plFacade.refreshSongList();
       })
     );
   }

@@ -4,20 +4,14 @@ export enum PlaylistsActionTypes {
   LoadPlaylists = '[Playlists] Load Playlists',
   PlaylistsLoaded = '[Playlists] Playlists Loaded',
   PlaylistsLoadError = '[Playlists] Playlists Load Error',
-  SavePlaylist = '[Albums] Save Playlist',
-  SavePlaylistError = '[Albums] Save Playlist Error',
-  RefreshSongList = '[Albums] Refresh Song List',
-  RefreshSongListSuccess = '[Albums] Refresh Song List Success',
-  RefreshSongListError = '[Albums] Refresh Song List Error',
+  CreatePlaylist = '[Albums] Create Playlist',
+  CreatePlaylistSuccess = '[Albums] Create Playlist Success',
+  CreatePlaylistError = '[Albums] Create Playlist Error',
   AddToPlaylist = '[Albums] Add To Playlist',
-  AddToPlaylistSuccess = '[Albums] Add To Playlist Success',
-  AddToPlaylistError = '[Albums] Add To Playlist Error',
   GetPlaylistTracks = '[Albums] Get Playlist Tracks',
   GetPlaylistTracksSuccess = '[Albums] Get Playlist Tracks Success',
   GetPlaylistTracksError = '[Albums] Get Playlist Tracks Error',
-  DeletePlaylistTrack = '[Albums] Delete Playlist Track',
-  DeletePlaylistTrackSuccess = '[Albums] Delete Playlist Track Success',
-  DeletePlaylistTrackError = '[Albums] Delete Playlist Track Error'
+  DeletePlaylistTrack = '[Albums] Delete Playlist Track'
 }
 
 export class LoadPlaylists implements Action {
@@ -34,44 +28,24 @@ export class PlaylistsLoaded implements Action {
   constructor(public payload: any[]) {}
 }
 
-export class SavePlaylist implements Action {
-  readonly type = PlaylistsActionTypes.SavePlaylist;
+export class CreatePlaylist implements Action {
+  readonly type = PlaylistsActionTypes.CreatePlaylist;
   constructor(public payload: any) {}
 }
 
-export class SavePlaylistError implements Action {
-  readonly type = PlaylistsActionTypes.SavePlaylistError;
+export class CreatePlaylistSuccess implements Action {
+  readonly type = PlaylistsActionTypes.CreatePlaylistSuccess;
   constructor(public payload: any) {}
 }
 
-export class RefreshSongList implements Action {
-  readonly type = PlaylistsActionTypes.RefreshSongList;
-  constructor() {}
-}
-
-export class RefreshSongListSuccess implements Action {
-  readonly type = PlaylistsActionTypes.RefreshSongListSuccess;
+export class CreatePlaylistError implements Action {
+  readonly type = PlaylistsActionTypes.CreatePlaylistError;
   constructor(public payload: any) {}
-}
-
-export class RefreshSongListError implements Action {
-  readonly type = PlaylistsActionTypes.RefreshSongListError;
-  constructor() {}
 }
 
 export class AddToPlaylist implements Action {
   readonly type = PlaylistsActionTypes.AddToPlaylist;
   constructor(public payload: any) {}
-}
-
-export class AddToPlaylistSuccess implements Action {
-  readonly type = PlaylistsActionTypes.AddToPlaylistSuccess;
-  constructor() {}
-}
-
-export class AddToPlaylistError implements Action {
-  readonly type = PlaylistsActionTypes.AddToPlaylistError;
-  constructor() {}
 }
 
 export class GetPlaylistTracks implements Action {
@@ -94,51 +68,29 @@ export class DeletePlaylistTrack implements Action {
   constructor(public payload: any) {}
 }
 
-export class DeletePlaylistTrackSuccess implements Action {
-  readonly type = PlaylistsActionTypes.DeletePlaylistTrackSuccess;
-  constructor(public payload: any) {}
-}
-
-export class DeletePlaylistTrackError implements Action {
-  readonly type = PlaylistsActionTypes.DeletePlaylistTrackError;
-  constructor() {}
-}
-
 export type PlaylistsAction =
   | LoadPlaylists
   | PlaylistsLoaded
   | PlaylistsLoadError
-  | SavePlaylist
-  | SavePlaylistError
-  | RefreshSongList
-  | RefreshSongListSuccess
-  | RefreshSongListError
+  | CreatePlaylist
+  | CreatePlaylistSuccess
+  | CreatePlaylistError
   | AddToPlaylist
-  | AddToPlaylistSuccess
-  | AddToPlaylistError
   | GetPlaylistTracks
   | GetPlaylistTracksSuccess
   | GetPlaylistTracksError
-  | DeletePlaylistTrack
-  | DeletePlaylistTrackSuccess
-  | DeletePlaylistTrackError;
+  | DeletePlaylistTrack;
 
 export const fromPlaylistsActions = {
   LoadPlaylists,
   PlaylistsLoaded,
   PlaylistsLoadError,
-  SavePlaylist,
-  SavePlaylistError,
-  RefreshSongList,
-  RefreshSongListSuccess,
-  RefreshSongListError,
+  CreatePlaylist,
+  CreatePlaylistSuccess,
+  CreatePlaylistError,
   AddToPlaylist,
-  AddToPlaylistSuccess,
-  AddToPlaylistError,
   GetPlaylistTracks,
   GetPlaylistTracksSuccess,
   GetPlaylistTracksError,
-  DeletePlaylistTrack,
-  DeletePlaylistTrackSuccess,
-  DeletePlaylistTrackError
+  DeletePlaylistTrack
 };

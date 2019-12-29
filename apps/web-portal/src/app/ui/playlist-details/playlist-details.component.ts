@@ -1,5 +1,6 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PlaylistsFacade } from '@iresa/web-portal-data';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'iresa-portal-playlist-details',
@@ -8,11 +9,15 @@ import { PlaylistsFacade } from '@iresa/web-portal-data';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlaylistDetailsComponent implements OnInit {
-  constructor(private playlistFacade: PlaylistsFacade) {}
+  constructor(
+    private playlistFacade: PlaylistsFacade,
+    private route: ActivatedRoute
+  ) {}
 
-  ngOnInit() {}
+  playlist$;
 
-  get playlist$() {
-    return this.playlistFacade.tracks$;
+  ngOnInit() {
+    const id = this.route.snapshot.paramMap.get('playlistId');
+    this.playlist$ = this.playlistFacade.getPlaylist(id);
   }
 }

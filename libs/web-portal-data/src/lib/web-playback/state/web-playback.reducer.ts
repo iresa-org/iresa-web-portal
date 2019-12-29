@@ -6,7 +6,6 @@ import {
 export const WEB_PLAYBACK_FEATURE_KEY = 'webPlayback';
 
 export interface WebPlaybackState {
-  loggedIn: boolean;
   playing: boolean;
   queue: any[];
   position: number;
@@ -20,7 +19,6 @@ export interface WebPlaybackPartialState {
 }
 
 export const initialState: WebPlaybackState = {
-  loggedIn: false,
   playing: false,
   queue: [],
   position: 0,

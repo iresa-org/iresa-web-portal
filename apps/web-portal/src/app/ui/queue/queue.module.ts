@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { QueueComponent } from './queue.component';
 import { RouterModule } from '@angular/router';
 import { MatTableModule } from '@angular/material';
-import { WebPlaybackDataModule } from '@iresa/web-portal-data';
 import { LoadArtistsModule, SongTimeModule } from '@iresa/shared/utilities';
 import { SoundBarsComponent } from './sound-bars/sound-bars.component';
 
@@ -12,7 +11,6 @@ import { SoundBarsComponent } from './sound-bars/sound-bars.component';
   imports: [
     CommonModule,
     MatTableModule,
-    WebPlaybackDataModule,
     LoadArtistsModule,
     SongTimeModule,
     RouterModule.forChild([

@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input
 } from '@angular/core';
-import { WebPlaybackFacade, PlaylistsFacade } from '@iresa/web-portal-data';
+import { PlaylistsFacade } from '@iresa/web-portal-data';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({
@@ -14,10 +14,7 @@ import { BehaviorSubject } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PlaylistTracksComponent implements OnInit {
-  constructor(
-    private wpFacade: WebPlaybackFacade,
-    private playlistService: PlaylistsFacade
-  ) {}
+  constructor(private playlistService: PlaylistsFacade) {}
 
   @Input()
   set playlist(value) {
@@ -51,7 +48,6 @@ export class PlaylistTracksComponent implements OnInit {
 
   playSong(index) {
     const track = this._tracks[index];
-    this.wpFacade.setQueue([track]);
   }
 
   delete(index) {

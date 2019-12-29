@@ -4,4 +4,3 @@ export * from './lib/albums';
 export * from './lib/auth';
 export * from './lib/playlist';
 export * from './lib/stations';
-export * from './lib/poll';

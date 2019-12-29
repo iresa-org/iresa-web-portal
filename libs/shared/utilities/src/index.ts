@@ -5,3 +5,4 @@ export * from './lib/song-time';
 export * from './lib/load-release-year';
 export * from './lib/script-loader';
 export * from './lib/connect-form';
+export * from './lib/rand-gen';

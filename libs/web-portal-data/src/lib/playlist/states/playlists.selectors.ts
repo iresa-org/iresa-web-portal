@@ -10,6 +10,12 @@ const getLoaded = createSelector(
   getPlaylistsState,
   (state: PlaylistsState) => state.loaded
 );
+
+const getTracksLoaded = createSelector(
+  getPlaylistsState,
+  (state: PlaylistsState) => state.tracksLoaded
+);
+
 const getError = createSelector(
   getPlaylistsState,
   (state: PlaylistsState) => state.error
@@ -31,15 +37,17 @@ const getCustPlaylists = createSelector(
   }
 );
 
-const getTracks = createSelector(
+const getPlaylist = createSelector(
   getPlaylistsState,
-  (state: PlaylistsState) => state.tracks
+  (state: PlaylistsState, props) =>
+    state.list.find(item => item.id === props.id)
 );
 
 export const playlistsQuery = {
   getLoaded,
+  getTracksLoaded,
   getError,
   getFavPlaylists,
   getCustPlaylists,
-  getTracks
+  getPlaylist
 };

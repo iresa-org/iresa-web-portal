@@ -1,13 +1,8 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import {
-  AlbumsFacade,
-  WebPlaybackFacade,
-  PlaylistsFacade
-} from '@iresa/web-portal-data';
+import { AlbumsFacade, PlaylistsFacade } from '@iresa/web-portal-data';
 import { MatDialog } from '@angular/material';
 import { PlaylistDialogComponent } from './playlist-dialog/playlist-dialog.component';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { switchMap } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'iresa-portal-album-track-list',
@@ -20,7 +15,6 @@ export class AlbumTrackListComponent implements OnInit {
   selectedIdx: number;
   constructor(
     private albumFacade: AlbumsFacade,
-    private wpFacade: WebPlaybackFacade,
     private playlistFacade: PlaylistsFacade,
     public dialog: MatDialog,
     private route: ActivatedRoute
@@ -46,19 +40,18 @@ export class AlbumTrackListComponent implements OnInit {
 
   playSong(track, album) {
     const data = { ...track, images: album.images };
-    this.wpFacade.setQueue([data]);
   }
 
   savePlaylist(playlist) {
-    this.playlistFacade.savePlaylist({ ...playlist, type: 'favorite' });
+    this.playlistFacade.createPlaylist({ ...playlist, type: 'favorite' });
   }
 
   addToPlaylist(playlist, track, album) {
     if (!track.album) {
-      track = { ...track, album: album };
+      track = { ...track, album: album, images: album.images };
     }
     this.playlistFacade.addToPlaylist({
-      playlistId: playlist.recordId,
+      playlistId: playlist.id,
       track
     });
   }
@@ -76,7 +69,7 @@ export class AlbumTrackListComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(name => {
       if (name && name.trim() !== '') {
-        this.playlistFacade.savePlaylist({ name });
+        this.playlistFacade.createPlaylist({ name });
       }
     });
   }

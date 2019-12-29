@@ -9,16 +9,14 @@ import {
 import {
   LoadPlaylists,
   PlaylistsActionTypes,
-  SavePlaylist,
   fromPlaylistsActions,
-  RefreshSongList,
-  AddToPlaylist,
   GetPlaylistTracks,
-  DeletePlaylistTrack
+  CreatePlaylist
 } from './playlists.actions';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { PlaylistsService } from './playlists.service';
 import { STATIONS_FEATURE_KEY } from '../../stations/state/stations.reducer';
+import { random } from '@iresa/shared/utilities';
 
 @Injectable()
 export class PlaylistsEffects {
@@ -27,9 +25,13 @@ export class PlaylistsEffects {
     {
       run: (action: LoadPlaylists, state: PlaylistsPartialState) => {
         const stationId = state[STATIONS_FEATURE_KEY].selectedId;
-        return this.playlistsService
-          .getPlaylists(stationId)
-          .pipe(map(data => new fromPlaylistsActions.PlaylistsLoaded(data)));
+        const list = state[PLAYLISTS_FEATURE_KEY].list;
+        if (list.length === 0) {
+          return this.playlistsService
+            .getPlaylists(stationId)
+            .pipe(map(data => new fromPlaylistsActions.PlaylistsLoaded(data)));
+        }
+        return new fromPlaylistsActions.PlaylistsLoaded(list);
       },
 
       onError: (action: LoadPlaylists, error) => {
@@ -40,101 +42,21 @@ export class PlaylistsEffects {
   );
 
   @Effect() savePlaylist$ = this.dataPersistence.optimisticUpdate(
-    PlaylistsActionTypes.SavePlaylist,
+    PlaylistsActionTypes.CreatePlaylist,
     {
-      run: (action: SavePlaylist, state: PlaylistsPartialState) => {
+      run: (action: CreatePlaylist, state: PlaylistsPartialState) => {
         const stationId = state[STATIONS_FEATURE_KEY].selectedId;
-        return this.playlistsService
-          .savePlaylist(stationId, action.payload)
-          .pipe(map((data: any) => new fromPlaylistsActions.LoadPlaylists()));
+        const id = random(12);
+        return new fromPlaylistsActions.CreatePlaylistSuccess({
+          id,
+          stationId,
+          ...action.payload,
+          tracks: []
+        });
       },
 
-      undoAction: (action: SavePlaylist, error) => {
-        return new fromPlaylistsActions.SavePlaylistError(error);
-      }
-    }
-  );
-
-  @Effect() deletePlaylistTrack$ = this.dataPersistence.pessimisticUpdate(
-    PlaylistsActionTypes.DeletePlaylistTrack,
-    {
-      run: (action: DeletePlaylistTrack, state: PlaylistsPartialState) => {
-        const stationId = state[STATIONS_FEATURE_KEY].selectedId;
-        const playlistId = action.payload.playlistId;
-        const trackId = action.payload.trackId;
-        return this.playlistsService
-          .deleteTrackList(stationId, playlistId, trackId)
-          .pipe(
-            map(
-              (data: any) =>
-                new fromPlaylistsActions.DeletePlaylistTrackSuccess(trackId)
-            )
-          );
-      },
-
-      onError: (action: DeletePlaylistTrack, error) => {
-        return new fromPlaylistsActions.DeletePlaylistTrackError();
-      }
-    }
-  );
-
-  @Effect() refreshSongList$ = this.dataPersistence.pessimisticUpdate(
-    PlaylistsActionTypes.RefreshSongList,
-    {
-      run: (action: RefreshSongList, state: PlaylistsPartialState) => {
-        const playlists = state[PLAYLISTS_FEATURE_KEY].list;
-        const idx = this.getPlaylistIdx(
-          state[PLAYLISTS_FEATURE_KEY].prevIdx,
-          playlists.length
-        );
-        const playlist = playlists[idx];
-        const stationId = state[STATIONS_FEATURE_KEY].selectedId;
-        if (playlist) {
-          return this.playlistsService.removeAllSongList(stationId).pipe(
-            switchMap(s =>
-              this.playlistsService.getPlaylistTracks(stationId, playlist)
-            ),
-            switchMap(tracks =>
-              this.playlistsService
-                .setSongList(stationId, tracks)
-                .pipe(
-                  map(
-                    resp =>
-                      new fromPlaylistsActions.RefreshSongListSuccess({
-                        prevIdx: idx
-                      })
-                  )
-                )
-            )
-          );
-        }
-
-        return new fromPlaylistsActions.RefreshSongListSuccess(null);
-      },
-
-      onError: (action: RefreshSongList, error) => {
-        console.error('Error', error);
-        return new fromPlaylistsActions.RefreshSongListError();
-      }
-    }
-  );
-
-  @Effect() addToPlaylist$ = this.dataPersistence.optimisticUpdate(
-    PlaylistsActionTypes.AddToPlaylist,
-    {
-      run: (action: AddToPlaylist, state: PlaylistsPartialState) => {
-        const stationId = state[STATIONS_FEATURE_KEY].selectedId;
-        const playlistId = action.payload.playlistId;
-        const track = action.payload.track;
-        return this.playlistsService
-          .addToPlaylist(stationId, playlistId, track)
-          .pipe(
-            map((data: any) => new fromPlaylistsActions.AddToPlaylistSuccess())
-          );
-      },
-
-      undoAction: (action: AddToPlaylist, error) => {
-        return new fromPlaylistsActions.AddToPlaylistError();
+      undoAction: (action: CreatePlaylist, error) => {
+        return new fromPlaylistsActions.CreatePlaylistError(error);
       }
     }
   );
@@ -145,7 +67,7 @@ export class PlaylistsEffects {
       run: (action: GetPlaylistTracks, state: PlaylistsPartialState) => {
         const stationId = state[STATIONS_FEATURE_KEY].selectedId;
         const playlist = state[PLAYLISTS_FEATURE_KEY].list.find(
-          item => item.recordId === action.payload
+          item => item.id === action.payload
         );
         return this.playlistsService
           .getPlaylistTracks(stationId, playlist)

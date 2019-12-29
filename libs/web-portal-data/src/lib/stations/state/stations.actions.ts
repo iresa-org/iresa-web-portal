@@ -8,8 +8,7 @@ export enum StationsActionTypes {
   LoadStationDetails = '[Stations] Load Station Details',
   StationDetailsLoaded = '[Stations] Station Details Loaded',
   StationDetailsLoadError = '[Stations] Station Details Load Error',
-  UpdateStationDetails = '[Stations] Update Station Details',
-  StationDetailsUpdateError = '[Stations] Station Details Update Error'
+  UpdateStationDetails = '[Stations] Update Station Details'
 }
 
 export class LoadStations implements Action {
@@ -51,11 +50,6 @@ export class UpdateStationDetails implements Action {
   constructor(public payload) {}
 }
 
-export class StationDetailsUpdateError implements Action {
-  readonly type = StationsActionTypes.StationDetailsUpdateError;
-  constructor() {}
-}
-
 export type StationsAction =
   | LoadStations
   | StationsLoaded
@@ -64,8 +58,7 @@ export type StationsAction =
   | LoadStationDetails
   | StationDetailsLoaded
   | StationDetailsLoadError
-  | UpdateStationDetails
-  | StationDetailsUpdateError;
+  | UpdateStationDetails;
 
 export const fromStationsActions = {
   LoadStations,
@@ -75,6 +68,5 @@ export const fromStationsActions = {
   LoadStationDetails,
   StationDetailsLoaded,
   StationDetailsLoadError,
-  UpdateStationDetails,
-  StationDetailsUpdateError
+  UpdateStationDetails
 };

@@ -15,7 +15,6 @@ export interface PlaylistsState {
   prevIdx: number;
   loaded: boolean; // has the Playlists list been loaded
   error?: any; // last none error (if any),
-  tracks: any;
   tracksLoaded: boolean;
 }
 
@@ -27,7 +26,6 @@ export const initialState: PlaylistsState = {
   list: [],
   prevIdx: -1,
   loaded: false,
-  tracks: null,
   tracksLoaded: false
 };
 
@@ -47,33 +45,56 @@ export function reducer(
     case PlaylistsActionTypes.GetPlaylistTracks: {
       state = {
         ...state,
-        tracksLoaded: false,
-        tracks: null
+        list: state.list.map(item =>
+          item.id === action.payload.id ? { ...item, tracks: null } : item
+        ),
+        tracksLoaded: false
       };
       break;
     }
     case PlaylistsActionTypes.GetPlaylistTracksSuccess: {
       state = {
         ...state,
-        tracks: action.payload,
+        list: state.list.map(item =>
+          item.id === action.payload.id
+            ? { ...item, tracks: action.payload.tracks }
+            : item
+        ),
         tracksLoaded: true
       };
       break;
     }
-    case PlaylistsActionTypes.DeletePlaylistTrackSuccess: {
+    case PlaylistsActionTypes.DeletePlaylistTrack: {
       state = {
         ...state,
-        tracks: {
-          ...state.tracks,
-          tracks: state.tracks.tracks.filter(t => t.recordId !== action.payload)
-        }
+        list: state.list.map(item =>
+          item.id === action.payload.playlistId
+            ? {
+                ...item,
+                tracks: item.tracks.filter(
+                  track => track.id === action.payload.trackId
+                )
+              }
+            : item
+        )
       };
       break;
     }
-    case PlaylistsActionTypes.RefreshSongListSuccess: {
+    case PlaylistsActionTypes.AddToPlaylist: {
       state = {
         ...state,
-        prevIdx: action.payload ? action.payload.prevIdx : state.prevIdx
+        list: state.list.map(item =>
+          item.id === action.payload.playlistId
+            ? { ...item, tracks: [...item.tracks, action.payload.track] }
+            : item
+        )
+      };
+      break;
+    }
+    case PlaylistsActionTypes.CreatePlaylistSuccess: {
+      state = {
+        ...state,
+        list: [...state.list, action.payload]
       };
       break;
     }
