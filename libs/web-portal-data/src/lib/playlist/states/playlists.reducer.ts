@@ -72,7 +72,7 @@ export function reducer(
             ? {
                 ...item,
                 tracks: item.tracks.filter(
-                  track => track.id === action.payload.trackId
+                  (_, i) => i !== action.payload.position
                 )
               }
             : item

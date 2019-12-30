@@ -32,7 +32,7 @@ export class PlaylistTracksComponent implements OnInit {
   showActionCol = false;
   _tracks: any[];
   _dataSource = new BehaviorSubject<any[]>([]);
-  _playlist: { tracks: any[]; type: string; recordId: string };
+  _playlist: { tracks: any[]; type: string; id: string };
 
   ngOnInit() {
     if (this._playlist.type !== 'favorite') {
@@ -55,8 +55,8 @@ export class PlaylistTracksComponent implements OnInit {
 
   delete(index) {
     this.playlistService.deletePlaylistTrack({
-      playlistId: this._playlist.recordId,
-      trackId: this._tracks[index].recordId
+      playlistId: this._playlist.id,
+      position: index
     });
   }
 
