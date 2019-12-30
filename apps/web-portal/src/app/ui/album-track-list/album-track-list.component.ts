@@ -1,8 +1,13 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { AlbumsFacade, PlaylistsFacade } from '@iresa/web-portal-data';
+import {
+  AlbumsFacade,
+  PlaylistsFacade,
+  WebPlaybackFacade
+} from '@iresa/web-portal-data';
 import { MatDialog } from '@angular/material';
 import { PlaylistDialogComponent } from './playlist-dialog/playlist-dialog.component';
 import { ActivatedRoute } from '@angular/router';
+import { isNgTemplate } from '@angular/compiler';
 
 @Component({
   selector: 'iresa-portal-album-track-list',
@@ -17,7 +22,8 @@ export class AlbumTrackListComponent implements OnInit {
     private albumFacade: AlbumsFacade,
     private playlistFacade: PlaylistsFacade,
     public dialog: MatDialog,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private wp: WebPlaybackFacade
   ) {}
 
   ngOnInit() {
@@ -38,8 +44,11 @@ export class AlbumTrackListComponent implements OnInit {
     return this.playlistFacade.custPlaylists$;
   }
 
-  playSong(track, album) {
-    const data = { ...track, images: album.images };
+  addToQueue(album, idx) {
+    const items = album.tracks.items.map(item => {
+      return { ...item, images: album.images };
+    });
+    this.wp.setQueue({ items, position: idx });
   }
 
   savePlaylist(playlist) {

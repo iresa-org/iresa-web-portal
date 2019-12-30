@@ -35,8 +35,8 @@ export function reducer(
     case WebPlaybackActionTypes.SetQueue: {
       state = {
         ...state,
-        queue: action.payload,
-        position: 0
+        queue: action.payload.items,
+        position: action.payload.position
       };
       break;
     }

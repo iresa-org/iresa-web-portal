@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { PlaylistsFacade } from '@iresa/web-portal-data';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'iresa-portal-playlist-details',
@@ -14,7 +15,7 @@ export class PlaylistDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) {}
 
-  playlist$;
+  playlist$: Observable<any>;
 
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('playlistId');
