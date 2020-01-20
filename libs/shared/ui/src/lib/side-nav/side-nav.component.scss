@@ -2,6 +2,9 @@
 
 .sidenav {
   width: auto;
+  position: fixed;
+  top: 64px;
+  height: 200px;
 }
 
 .sidenav .mat-toolbar {
