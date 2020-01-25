@@ -14,8 +14,7 @@ export const playlists = [
     id: '4JgPn5zouXilXoM2v1Istn',
     images: [
       {
-        url:
-          'https://pl.scdn.co/images/pl/default/665695dfdbc45b9b2fe3b43dcad4580d9e178b9b'
+        url: 'https://charts-images.scdn.co/REGIONAL_US_DEFAULT.jpg'
       }
     ],
     name: 'Top 50 USA - USA TOP 50 - Top 50 America'

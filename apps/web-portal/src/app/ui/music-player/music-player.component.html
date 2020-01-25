@@ -9,7 +9,7 @@
     <div class="song-image">
       <img
         *ngIf="currPlaying$ | async as curr"
-        [src]="curr.images | loadImage"
+        [src]="curr?.album?.images | loadImage"
         [alt]="curr?.name"
         [title]="curr?.name"
       />

@@ -10,7 +10,17 @@ const getWebPlaybackState = createFeatureSelector<WebPlaybackState>(
 
 const getQueue = createSelector(
   getWebPlaybackState,
-  (state: WebPlaybackState) => state.queue
+  (state: WebPlaybackState) => {
+    if (!state.track_window) {
+      return [];
+    }
+    const curr = { ...state.track_window.current_track, curr: true };
+    return [
+      ...state.track_window.previous_tracks,
+      curr,
+      ...state.track_window.next_tracks
+    ];
+  }
 );
 
 const getPlaying = createSelector(
@@ -18,35 +28,20 @@ const getPlaying = createSelector(
   (state: WebPlaybackState) => state.playing
 );
 
-const getCurrTrack = createSelector(
-  getWebPlaybackState,
-  (state: WebPlaybackState) =>
-    state.position >= 0 && state.position < state.queue.length
-      ? state.queue[state.position]
-      : null
-);
-
-const getEndOfQueue = createSelector(
-  getWebPlaybackState,
-  (state: WebPlaybackState) =>
-    state.queue.length > 0 && state.position >= state.queue.length
-);
-
 const getVol = createSelector(
   getWebPlaybackState,
   (state: WebPlaybackState) => state.vol
 );
 
-const getPosition = createSelector(
+const getCurrTrack = createSelector(
   getWebPlaybackState,
-  (state: WebPlaybackState) => state.position
+  (state: WebPlaybackState) =>
+    state.track_window ? state.track_window.current_track : {}
 );
 
 export const webPlaybackQuery = {
   getQueue,
   getPlaying,
-  getCurrTrack,
-  getEndOfQueue,
   getVol,
-  getPosition
+  getCurrTrack
 };

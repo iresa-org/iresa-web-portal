@@ -10,16 +10,12 @@ import { map } from 'rxjs/operators';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QueueComponent implements OnInit {
-  displayedColumns: string[] = ['select', 'name', 'artists', 'duration_ms'];
+  displayedColumns: string[] = ['curr', 'name', 'artists', 'duration_ms'];
   _dataSource = new BehaviorSubject<any[]>([]);
 
   constructor(private playback: WebPlaybackFacade) {}
 
   ngOnInit() {}
-
-  get position$() {
-    return this.playback.position$;
-  }
 
   get dataSource$() {
     return this.playback.queue$.pipe(map(list => this.loadDataSource(list)));

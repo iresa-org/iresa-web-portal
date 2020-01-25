@@ -44,11 +44,8 @@ export class AlbumTrackListComponent implements OnInit {
     return this.playlistFacade.custPlaylists$;
   }
 
-  addToQueue(album, idx) {
-    const items = album.tracks.items.map(item => {
-      return { ...item, images: album.images };
-    });
-    this.wp.setQueue({ items, position: idx });
+  play(track) {
+    this.wp.play([track.uri]);
   }
 
   savePlaylist(playlist) {

@@ -9,13 +9,9 @@ import {
 import { WindowRef, ScriptLoaderService } from '@iresa/shared/utilities';
 import { SpotifyService } from '@iresa/ngx-spotify';
 import { MusicPlayer, PlayerStates } from './music-player.config';
-import {
-  WebPlaybackFacade,
-  PlaylistsFacade,
-  DashboardFacade
-} from '@iresa/web-portal-data';
+import { WebPlaybackFacade, DashboardFacade } from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
-import { filter, skip } from 'rxjs/operators';
+import { skip } from 'rxjs/operators';
 import { MatSliderChange } from '@angular/material';
 import { Router } from '@angular/router';
 
@@ -44,7 +40,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   ) {}
 
   get currPlaying$() {
-    return this.wpFacade.currPlayingTrack$;
+    return this.wpFacade.currTrack$;
   }
 
   get playingState$() {
@@ -63,11 +59,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.initOutSideFn();
     this.onSpotifyReady();
-    this.onQueueUpdate();
     this.loadScript();
-    this.onCurrTrack();
-    this.onEndOfQueue();
-    this.onPauseResume();
     this.onVolChange();
   }
 
@@ -79,41 +71,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     );
   }
 
-  onPauseResume() {
-    this.subs.add(
-      this.playingState$
-        .pipe(
-          filter(s => !s && !this.manTogglePlay),
-          skip(1)
-        )
-        .subscribe(track => {
-          this.wpFacade.next();
-        })
-    );
-  }
-
-  onEndOfQueue() {
-    this.subs.add(
-      this.wpFacade.endOfQueue$.pipe(filter(s => !!s)).subscribe(track => {
-        // this.wpFacade.refreshQueue();
-      })
-    );
-  }
-
-  onCurrTrack() {
-    this.subs.add(
-      this.wpFacade.currPlayingTrack$
-        .pipe(filter(t => !!t))
-        .subscribe(track => {
-          const authToken = this.musicPlayerCtrl.authToken;
-          const device_id = this.musicPlayerCtrl.device_id;
-          const URIs = [track.uri];
-          this.wpFacade.play({ authToken, device_id, URIs });
-          // this.wpFacade.updateRemoteQueue(track);
-        })
-    );
-  }
-
   loadScript() {
     this.slService
       .load({
@@ -122,14 +79,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
         loaded: false
       })
       .subscribe();
-  }
-
-  onQueueUpdate() {
-    this.subs.add(
-      this.wpFacade.queue$.pipe(filter(q => q.length > 0)).subscribe(q => {
-        // this.plFacade.refreshSongList();
-      })
-    );
   }
 
   openQueue() {
@@ -160,6 +109,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     this.musicPlayerCtrl = this.winRef.nativeWindow.MusicPlayer;
     this.musicPlayerCtrl.getAuthToken = this.getAuthToken;
     this.musicPlayerCtrl.handleStateChanges = this.handleStateChanges;
+    this.musicPlayerCtrl.setPlayerInfo = this.setPlayerInfo;
   }
 
   getAuthToken = () => {
@@ -177,6 +127,17 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       if (states.paused !== undefined) {
         this.wpFacade.setPlaying(!states.paused);
       }
+      if (states.track_window !== undefined) {
+        this.wpFacade.setTrackWindow(states.track_window);
+      }
+    });
+  };
+
+  setPlayerInfo = data => {
+    this.ngZone.run(() => {
+      const authToken = this.musicPlayerCtrl.authToken;
+      const device_id = this.musicPlayerCtrl.device_id;
+      this.wpFacade.setPlayerInfo({ authToken, device_id });
     });
   };
 
@@ -190,11 +151,11 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   prev() {
-    this.wpFacade.prev();
+    this.musicPlayerCtrl.musicPlayer.previousTrack();
   }
 
   next() {
-    this.wpFacade.next();
+    this.musicPlayerCtrl.musicPlayer.nextTrack();
   }
 
   onSpotifyReady() {
@@ -232,6 +193,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       player.addListener('ready', ({ device_id }) => {
         window['MusicPlayer'].musicPlayer = player;
         window['MusicPlayer'].device_id = device_id;
+        window['MusicPlayer'].setPlayerInfo();
       });
 
       // Not Ready

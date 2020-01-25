@@ -9,16 +9,10 @@ import { fromWebPlaybackActions } from './web-playback.actions';
 export class WebPlaybackFacade {
   queue$ = this.store.pipe(select(webPlaybackQuery.getQueue));
   playing$ = this.store.pipe(select(webPlaybackQuery.getPlaying));
-  endOfQueue$ = this.store.pipe(select(webPlaybackQuery.getEndOfQueue));
-  currPlayingTrack$ = this.store.pipe(select(webPlaybackQuery.getCurrTrack));
   vol$ = this.store.pipe(select(webPlaybackQuery.getVol));
-  position$ = this.store.pipe(select(webPlaybackQuery.getPosition));
+  currTrack$ = this.store.pipe(select(webPlaybackQuery.getCurrTrack));
 
   constructor(private store: Store<WebPlaybackPartialState>) {}
-
-  setQueue(val) {
-    this.store.dispatch(new fromWebPlaybackActions.SetQueue(val));
-  }
 
   play(data) {
     this.store.dispatch(new fromWebPlaybackActions.Play(data));
@@ -28,19 +22,19 @@ export class WebPlaybackFacade {
     this.store.dispatch(new fromWebPlaybackActions.SetPlaying(val));
   }
 
-  next() {
-    this.store.dispatch(new fromWebPlaybackActions.Next());
-  }
-
-  prev() {
-    this.store.dispatch(new fromWebPlaybackActions.Prev());
-  }
-
   toggleMute() {
     this.store.dispatch(new fromWebPlaybackActions.ToggleMute());
   }
 
   setVol(data) {
     this.store.dispatch(new fromWebPlaybackActions.SetVol(data));
+  }
+
+  setPlayerInfo(data) {
+    this.store.dispatch(new fromWebPlaybackActions.SetPlayerInfo(data));
+  }
+
+  setTrackWindow(data) {
+    this.store.dispatch(new fromWebPlaybackActions.SetTrackWindow(data));
   }
 }

@@ -50,7 +50,7 @@ export class PlaylistTracksComponent implements OnInit {
   }
 
   playSong(index) {
-    this.wp.setQueue({ items: this._tracks, position: index });
+    this.wp.play([this._tracks[index].uri]);
   }
 
   delete(index) {

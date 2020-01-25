@@ -7,11 +7,18 @@ export const WEB_PLAYBACK_FEATURE_KEY = 'webPlayback';
 
 export interface WebPlaybackState {
   playing: boolean;
-  queue: any[];
-  position: number;
   vol: number;
   lastVol: number;
   muted: boolean;
+  track_window: {
+    current_track: any;
+    previous_tracks: any[];
+    next_tracks: any[];
+  };
+  playerInfo: {
+    authToken: string;
+    device_id: string;
+  };
 }
 
 export interface WebPlaybackPartialState {
@@ -20,11 +27,11 @@ export interface WebPlaybackPartialState {
 
 export const initialState: WebPlaybackState = {
   playing: false,
-  queue: [],
-  position: 0,
   vol: 1,
   lastVol: 1,
-  muted: false
+  muted: false,
+  track_window: null,
+  playerInfo: null
 };
 
 export function reducer(
@@ -32,32 +39,10 @@ export function reducer(
   action: WebPlaybackAction
 ): WebPlaybackState {
   switch (action.type) {
-    case WebPlaybackActionTypes.SetQueue: {
-      state = {
-        ...state,
-        queue: action.payload.items,
-        position: action.payload.position
-      };
-      break;
-    }
     case WebPlaybackActionTypes.SetPlaying: {
       state = {
         ...state,
         playing: action.payload
-      };
-      break;
-    }
-    case WebPlaybackActionTypes.Next: {
-      state = {
-        ...state,
-        position: state.position + 1
-      };
-      break;
-    }
-    case WebPlaybackActionTypes.Prev: {
-      state = {
-        ...state,
-        position: state.position > 0 ? state.position - 1 : state.position
       };
       break;
     }
@@ -74,6 +59,20 @@ export function reducer(
         vol: state.muted ? state.lastVol : 0,
         lastVol: !state.muted ? state.vol : state.lastVol,
         muted: !state.muted
+      };
+      break;
+    }
+    case WebPlaybackActionTypes.SetPlayerInfo: {
+      state = {
+        ...state,
+        playerInfo: action.payload
+      };
+      break;
+    }
+    case WebPlaybackActionTypes.SetTrackWindow: {
+      state = {
+        ...state,
+        track_window: action.payload
       };
       break;
     }
