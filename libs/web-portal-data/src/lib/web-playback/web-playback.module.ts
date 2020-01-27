@@ -6,7 +6,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { WebPlaybackEffects } from './state/web-playback.effects';
 import { WebPlaybackFacade } from './state/web-playback.facade';
 import { DataPersistence } from '@nrwl/angular';
-import { WebPlaybackService } from './state/web-playback.service';
 
 @NgModule({
   declarations: [],
@@ -18,6 +17,6 @@ import { WebPlaybackService } from './state/web-playback.service';
     ),
     EffectsModule.forFeature([WebPlaybackEffects])
   ],
-  providers: [WebPlaybackFacade, DataPersistence, WebPlaybackService]
+  providers: [WebPlaybackFacade, DataPersistence]
 })
 export class WebPlaybackDataModule {}

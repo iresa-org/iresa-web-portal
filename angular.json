@@ -248,33 +248,6 @@
           "styleext": "scss"
         }
       }
-    },
-    "firestore": {
-      "projectType": "library",
-      "root": "libs/firestore",
-      "sourceRoot": "libs/firestore/src",
-      "prefix": "iresa",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/firestore/tsconfig.lib.json",
-              "libs/firestore/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/firestore/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/firestore/jest.config.js",
-            "tsConfig": "libs/firestore/tsconfig.spec.json",
-            "setupFile": "libs/firestore/src/test-setup.ts"
-          }
-        }
-      },
-      "schematics": {}
     }
   },
   "cli": {

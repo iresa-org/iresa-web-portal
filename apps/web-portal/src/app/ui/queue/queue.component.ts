@@ -21,6 +21,10 @@ export class QueueComponent implements OnInit {
     return this.playback.queue$.pipe(map(list => this.loadDataSource(list)));
   }
 
+  get playing$() {
+    return this.playback.playing$;
+  } 
+
   loadDataSource(list) {
     if (list.length > 0) {
       return list.map(item => {

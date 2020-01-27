@@ -49,7 +49,6 @@
     "@nrwl/angular": "8.7.1",
     "angularx-qrcode": "^1.6.4",
     "core-js": "^2.5.4",
-    "firestore-parser": "^0.8.9",
     "hammerjs": "^2.0.8",
     "rxjs": "~6.4.0",
     "subsink": "^1.0.0",

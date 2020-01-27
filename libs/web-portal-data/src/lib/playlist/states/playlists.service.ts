@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
-import { FirestoreBuilderService } from '@iresa/firestore';
 import { map } from 'rxjs/operators';
 import { SpotifyService } from '@iresa/ngx-spotify';
 import { playlists } from './playlists';
@@ -11,37 +10,6 @@ export class PlaylistsService {
 
   getPlaylists(stationId: string) {
     return of(playlists);
-  }
-
-  playlistForm(playlist) {
-    let form = {};
-    const fields = ['id', 'images', 'name', 'type'];
-
-    fields.forEach(key => {
-      if (playlist[key]) {
-        form[key] = playlist[key];
-      }
-    });
-    form = FirestoreBuilderService.build(form);
-    return form;
-  }
-
-  trackForm(track) {
-    let form = {};
-    const fields = ['id', 'images', 'name', 'uri', 'artists', 'duration_ms'];
-
-    track = { ...track, images: track.album.images.slice(0, 1) };
-    fields.forEach(key => {
-      if (track[key]) {
-        if (key === 'artists') {
-          form[key] = this.toArtistNames(track[key]);
-        } else {
-          form[key] = track[key];
-        }
-      }
-    });
-    form = FirestoreBuilderService.build(form);
-    return form;
   }
 
   getPlaylistTracks(stationId, playlist) {

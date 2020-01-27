@@ -5,7 +5,7 @@
     <ng-container matColumnDef="curr">
       <mat-header-cell *matHeaderCellDef></mat-header-cell>
       <mat-cell *matCellDef="let element"
-        ><iresa-portal-sound-bars *ngIf="element.curr"></iresa-portal-sound-bars
+        ><iresa-portal-sound-bars *ngIf="element.curr && (playing$ | async)"></iresa-portal-sound-bars
       ></mat-cell>
     </ng-container>
 
