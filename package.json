@@ -26,8 +26,7 @@
     "workspace-schematic": "nx workspace-schematic",
     "dep-graph": "nx dep-graph",
     "help": "nx help",
-    "build:app": "run-p lint build",
-    "deploy": "gh-pages -d dist/apps/web-portal"
+    "build:app": "run-p lint build"
   },
   "private": true,
   "dependencies": {
