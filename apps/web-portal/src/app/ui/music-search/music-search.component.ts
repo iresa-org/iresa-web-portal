@@ -8,7 +8,7 @@ import { FormControl } from '@angular/forms';
 import { debounceTime, tap, startWith, filter } from 'rxjs/operators';
 import { DashboardFacade } from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
-import { MatAutocompleteSelectedEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Router } from '@angular/router';
 import { environment } from '@iresa/web-portal/env';
 

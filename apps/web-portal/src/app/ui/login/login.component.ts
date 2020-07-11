@@ -5,7 +5,7 @@ import {
   ViewEncapsulation,
   ViewChild
 } from '@angular/core';
-import { MatTabGroup } from '@angular/material';
+import { MatTabGroup } from '@angular/material/tabs';
 import { FormGroup } from '@angular/forms';
 import { StationsFacade } from '@iresa/web-portal-data';
 import { take, filter } from 'rxjs/operators';

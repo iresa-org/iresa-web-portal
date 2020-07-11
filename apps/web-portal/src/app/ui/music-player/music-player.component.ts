@@ -12,7 +12,7 @@ import { MusicPlayer, PlayerStates } from './music-player.config';
 import { WebPlaybackFacade, DashboardFacade } from '@iresa/web-portal-data';
 import { SubSink } from 'subsink';
 import { skip } from 'rxjs/operators';
-import { MatSliderChange } from '@angular/material';
+import { MatSliderChange } from '@angular/material/slider';
 import { Router } from '@angular/router';
 
 declare var Spotify: any;

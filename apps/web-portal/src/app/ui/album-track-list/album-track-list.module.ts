@@ -7,15 +7,13 @@ import {
   AlbumTracksResolver,
   PlaylistDataModule
 } from '@iresa/web-portal-data';
-import {
-  MatCardModule,
-  MatIconModule,
-  MatMenuModule,
-  MatButtonModule,
-  MatDividerModule,
-  MatDialogModule,
-  MatInputModule
-} from '@angular/material';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatMenuModule } from '@angular/material/menu';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {
   LoadArtistsModule,

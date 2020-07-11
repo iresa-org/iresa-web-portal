@@ -4,7 +4,7 @@ import {
   PlaylistsFacade,
   WebPlaybackFacade
 } from '@iresa/web-portal-data';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { PlaylistDialogComponent } from './playlist-dialog/playlist-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { isNgTemplate } from '@angular/compiler';

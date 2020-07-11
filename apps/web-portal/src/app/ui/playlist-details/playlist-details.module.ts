@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PlaylistDetailsComponent } from './playlist-details.component';
-import { MatIconModule, MatTableModule } from '@angular/material';
+import { MatIconModule } from '@angular/material/icon';
+import { MatTableModule } from '@angular/material/table';
 import { RouterModule } from '@angular/router';
 import { PlaylistTracksResolver } from '@iresa/web-portal-data';
 import { PlaylistTracksComponent } from './playlist-tracks/playlist-tracks.component';

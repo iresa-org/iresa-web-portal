@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input
 } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { QRCodeDialogComponent } from '../qr-code-dialog/qr-code-dialog.component';
 
 @Component({

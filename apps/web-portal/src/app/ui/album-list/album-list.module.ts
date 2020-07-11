@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 
 import { AlbumListComponent } from './album-list.component';
 import { RouterModule } from '@angular/router';
-import { MatCardModule } from '@angular/material';
+import { MatCardModule } from '@angular/material/card';
 import { AlbumsDataModule, AlbumsResolver } from '@iresa/web-portal-data';
 import {
   LoadImageModule,
