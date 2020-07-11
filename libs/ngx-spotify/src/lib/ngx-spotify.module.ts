@@ -5,7 +5,7 @@ import { SpotifyPlaybackService } from './spotify-playback.service';
 
 @NgModule()
 export class NgxSpotifyModule {
-  static forRoot(config: SpotifyConfig): ModuleWithProviders {
+  static forRoot(config: SpotifyConfig): ModuleWithProviders<NgxSpotifyModule> {
     return {
       ngModule: NgxSpotifyModule,
       providers: [

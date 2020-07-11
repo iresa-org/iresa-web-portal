@@ -23,7 +23,7 @@ import { SpotifyService } from '@iresa/ngx-spotify';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DashboardComponent implements OnInit {
-  @ViewChild('pageContent', { static: false }) pageContent: ElementRef;
+  @ViewChild('pageContent') pageContent: ElementRef;
   constructor(
     private dbFacade: DashboardFacade,
     private auth: AuthFacade,
