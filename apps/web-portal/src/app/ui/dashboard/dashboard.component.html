@@ -1,23 +1,23 @@
-<iresa-loader [hidden]="(loading$ | async) === false"></iresa-loader>
+<iresa-portal-loader [hidden]="(loading$ | async) === false"></iresa-portal-loader>
 <div class="page">
   <div class="page-header">
-    <iresa-header
+    <iresa-portal-header
       *ngIf="product$ | async as product"
       [product]="product"
       (logout)="logout()"
     >
       <iresa-portal-music-search></iresa-portal-music-search>
-    </iresa-header>
+    </iresa-portal-header>
   </div>
   <div #pageContent class="page-content">
-    <iresa-side-nav
+    <iresa-portal-side-nav
       *ngIf="menuItems$ | async as menu"
       [menuItems]="menu.menuItems"
       [activeItem]="menu.selectedItem"
       (menuClick)="onMenuClick($event)"
     >
       <router-outlet></router-outlet>
-    </iresa-side-nav>
+    </iresa-portal-side-nav>
   </div>
   <div class="page-footer">
     <iresa-portal-music-player></iresa-portal-music-player>

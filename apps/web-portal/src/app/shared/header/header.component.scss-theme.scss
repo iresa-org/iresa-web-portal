@@ -1,10 +1,10 @@
 @import '~@angular/material/theming';
 
-@mixin iresa-header-theme($theme) {
+@mixin iresa-portal-header-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
 
-  iresa-header {
+  iresa-portal-header {
     .mat-toolbar {
       background: mat-color($mat-grey, 50);
     }

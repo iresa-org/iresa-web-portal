@@ -16,8 +16,8 @@
 @import './app/ui/queue/sound-bars/sound-bars.component.scss-theme.scss';
 
 @mixin custom-components-theme($theme) {
-  @include iresa-side-nav-theme($theme);
-  @include iresa-header-theme($theme);
+  @include iresa-portal-side-nav-theme($theme);
+  @include iresa-portal-header-theme($theme);
   @include iresa-playlist-tracks-theme($theme);
   @include iresa-music-player-theme($theme);
   @include iresa-album-track-list-theme($theme);

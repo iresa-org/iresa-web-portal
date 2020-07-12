@@ -8,7 +8,7 @@ import {
 import { MenuItem } from './side-nav.config';
 
 @Component({
-  selector: 'iresa-side-nav',
+  selector: 'iresa-portal-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
