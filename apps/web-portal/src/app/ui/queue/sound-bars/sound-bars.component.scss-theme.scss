@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+
+@mixin iresa-sound-bars-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  iresa-portal-sound-bars {
+    .bar {
+      background: mat-color($accent);
+    }
+  }
+}

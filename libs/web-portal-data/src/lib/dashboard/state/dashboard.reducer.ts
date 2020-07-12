@@ -1,5 +1,4 @@
 import { DashboardAction, DashboardActionTypes } from './dashboard.actions';
-import { MenuItem } from '@iresa/shared/ui';
 import { menuItems } from './config/menu-items';
 
 export const DASHBOARD_FEATURE_KEY = 'dashboard';
@@ -13,7 +12,7 @@ export const DASHBOARD_FEATURE_KEY = 'dashboard';
 
 export interface DashboardState {
   useSample: boolean;
-  menuItems: MenuItem[];
+  menuItems: any[];
   selectedMenuItems: string;
   logoName: string;
   productName: string;
@@ -34,7 +33,7 @@ export const initialState: DashboardState = {
   productName: 'Portal',
   searchItems: [],
   searchLoading: false,
-  loading: false
+  loading: false,
 };
 
 export function reducer(
@@ -45,7 +44,7 @@ export function reducer(
     case DashboardActionTypes.Search: {
       state = {
         ...state,
-        searchLoading: true
+        searchLoading: true,
       };
       break;
     }
@@ -53,7 +52,7 @@ export function reducer(
       state = {
         ...state,
         searchLoading: false,
-        searchItems: action.payload
+        searchItems: action.payload,
       };
       break;
     }
@@ -61,28 +60,28 @@ export function reducer(
       state = {
         ...state,
         searchLoading: false,
-        searchItems: []
+        searchItems: [],
       };
       break;
     }
     case DashboardActionTypes.SetSelectedMenuItems: {
       state = {
         ...state,
-        selectedMenuItems: action.payload
+        selectedMenuItems: action.payload,
       };
       break;
     }
     case DashboardActionTypes.SetLoading: {
       state = {
         ...state,
-        loading: action.payload
+        loading: action.payload,
       };
       break;
     }
     case DashboardActionTypes.SetUseSample: {
       state = {
         ...state,
-        useSample: action.payload
+        useSample: action.payload,
       };
       break;
     }

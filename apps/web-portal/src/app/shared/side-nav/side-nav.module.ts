@@ -13,8 +13,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSidenavModule,
     MatIconModule,
     MatListModule,
-    MatTooltipModule
+    MatTooltipModule,
   ],
-  exports: [SideNavComponent]
+  exports: [SideNavComponent],
 })
 export class SideNavModule {}

@@ -1,0 +1,15 @@
+@import '~@angular/material/theming';
+
+@mixin iresa-music-player-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  iresa-portal-music-player {
+    .player-volume {
+      color: mat-color($mat-grey, 500);
+      &.link-active {
+        color: mat-color($primary);
+      }
+    }
+  }
+}

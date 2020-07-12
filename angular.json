@@ -27,7 +27,6 @@
               "apps/web-portal/src/404.html"
             ],
             "styles": [
-              "libs/shared/ui/scss/_variable.scss",
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "apps/web-portal/src/styles.scss"
             ],
@@ -59,8 +58,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "70kb",
-                  "maximumError": "100kb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ]
             }
@@ -156,37 +155,6 @@
         }
       },
       "schematics": {}
-    },
-    "shared-ui": {
-      "projectType": "library",
-      "root": "libs/shared/ui",
-      "sourceRoot": "libs/shared/ui/src",
-      "prefix": "iresa",
-      "architect": {
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "libs/shared/ui/tsconfig.lib.json",
-              "libs/shared/ui/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/shared/ui/**"]
-          }
-        },
-        "test": {
-          "builder": "@nrwl/jest:jest",
-          "options": {
-            "jestConfig": "libs/shared/ui/jest.config.js",
-            "tsConfig": "libs/shared/ui/tsconfig.spec.json",
-            "setupFile": "libs/shared/ui/src/test-setup.ts"
-          }
-        }
-      },
-      "schematics": {
-        "@nrwl/angular:component": {
-          "styleext": "scss"
-        }
-      }
     },
     "web-portal-data": {
       "projectType": "library",

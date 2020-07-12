@@ -3,7 +3,7 @@ import {
   ChangeDetectionStrategy,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
 } from '@angular/core';
 import { MenuItem } from './side-nav.config';
 
@@ -11,7 +11,7 @@ import { MenuItem } from './side-nav.config';
   selector: 'iresa-side-nav',
   templateUrl: './side-nav.component.html',
   styleUrls: ['./side-nav.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SideNavComponent {
   @Input()

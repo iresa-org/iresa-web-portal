@@ -1,12 +1,30 @@
 /* You can add global styles to this file, and also import other style files */
 
-html,
-body,
-.page {
-  height: 100%;
+@import 'styles-reset';
+
+@import '~@angular/material/theming';
+
+@include mat-core();
+
+@import './themes/default-theme';
+
+@import './app/shared/side-nav/side-nav.component.scss-theme.scss';
+@import './app/shared/header/header.component.scss-theme.scss';
+@import './app/ui/playlist-details/playlist-tracks/playlist-tracks.component.scss-theme.scss';
+@import './app/ui/music-player/music-player.component.scss-theme.scss';
+@import './app/ui/album-track-list/album-track-list.component.scss-theme.scss';
+@import './app/ui/queue/sound-bars/sound-bars.component.scss-theme.scss';
+
+@mixin custom-components-theme($theme) {
+  @include iresa-side-nav-theme($theme);
+  @include iresa-header-theme($theme);
+  @include iresa-playlist-tracks-theme($theme);
+  @include iresa-music-player-theme($theme);
+  @include iresa-album-track-list-theme($theme);
+  @include iresa-sound-bars-theme($theme);
 }
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
-  overflow: hidden;
+
+.default-theme {
+  @include angular-material-theme($iresa-theme);
+  @include custom-components-theme($iresa-theme);
 }

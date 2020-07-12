@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AuthorizeComponent } from './authorize.component';
 import { RouterModule } from '@angular/router';
-import { LoaderModule } from '@iresa/shared/ui';
 import { StationsDataModule } from '@iresa/web-portal-data';
+import { LoaderModule } from '../../shared/loader';
 
 @NgModule({
   declarations: [AuthorizeComponent],
@@ -14,9 +14,9 @@ import { StationsDataModule } from '@iresa/web-portal-data';
     RouterModule.forChild([
       {
         path: '',
-        component: AuthorizeComponent
-      }
-    ])
-  ]
+        component: AuthorizeComponent,
+      },
+    ]),
+  ],
 })
 export class AuthorizeModule {}

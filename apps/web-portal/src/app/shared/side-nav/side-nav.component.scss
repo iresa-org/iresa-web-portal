@@ -1,5 +1,3 @@
-@import '../../../scss/variable';
-
 .sidenav {
   width: auto;
   position: fixed;
@@ -33,13 +31,8 @@
 
 .mat-nav-list {
   .mat-list-item {
-    color: mat-color($mat-grey, 500);
     &:hover {
       background: none;
-    }
-
-    &.item-active {
-      color: $primary;
     }
   }
 }

@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+
+@mixin iresa-playlist-tracks-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  iresa-portal-playlist-tracks {
+    .mat-icon {
+      color: mat-color($mat-grey, 500);
+
+      &:hover {
+        color: mat-color($primary);
+      }
+    }
+  }
+}

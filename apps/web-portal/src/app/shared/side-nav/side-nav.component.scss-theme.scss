@@ -1,0 +1,21 @@
+@import '~@angular/material/theming';
+
+@mixin iresa-side-nav-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+
+  iresa-side-nav {
+    .mat-nav-list {
+      .mat-list-item {
+        color: mat-color($mat-grey, 500);
+        &:hover {
+          background: none;
+        }
+
+        &.item-active {
+          color: mat-color($primary);
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,5 @@
+$app-primary: mat-palette($mat-indigo);
+$app-accent: mat-palette($mat-pink, A200, A100, A400);
+$app-warn: mat-light-theme($app-primary, $app-accent);
+
+$iresa-theme: mat-light-theme($app-primary, $app-accent, $app-warn);

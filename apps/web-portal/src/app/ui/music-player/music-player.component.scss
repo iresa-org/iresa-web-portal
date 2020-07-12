@@ -1,5 +1,3 @@
-@import '../../../../../../libs/shared/ui/scss/variable';
-
 .song-name {
   text-overflow: ellipsis;
   overflow: hidden;
@@ -16,12 +14,5 @@ button {
   img {
     max-width: 60px;
     border-radius: 2px;
-  }
-}
-
-.player-volume {
-  color: mat-color($mat-grey, 500);
-  &.link-active {
-    color: $primary;
   }
 }
