@@ -116,6 +116,9 @@ MIT
 @angular/router
 MIT
 
+@iresa/ngx-imagely
+MIT
+
 @ngrx/effects
 MIT
 
