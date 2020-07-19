@@ -7,11 +7,12 @@ import { NgxSpotifyModule } from '@iresa/ngx-spotify';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardModule } from './ui/dashboard/dashboard.module';
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { WindowRef } from '@iresa/shared/utilities';
+import { NgxImagelyModule } from '@iresa/ngx-imagely';
+import { DashboardDataModule } from '@iresa/web-portal-data';
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,7 +21,7 @@ import { WindowRef } from '@iresa/shared/utilities';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    DashboardModule,
+    DashboardDataModule,
     NgxSpotifyModule.forRoot({
       clientId: environment.spotifyConfig.clientId,
       redirectUri: environment.spotifyConfig.redirectUri
@@ -37,7 +38,8 @@ import { WindowRef } from '@iresa/shared/utilities';
           logOnly: environment.production
         })
       : [],
-    EffectsModule.forRoot([])
+    EffectsModule.forRoot([]),
+    NgxImagelyModule.forRoot()
   ],
   providers: [WindowRef],
   bootstrap: [AppComponent]
