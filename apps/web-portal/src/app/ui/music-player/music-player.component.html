@@ -1,4 +1,8 @@
-<mat-card fxLayout="row" fxLayoutAlign="space-between center">
+<mat-card
+  *ngIf="{ volChange: volChange$ | async }"
+  fxLayout="row"
+  fxLayoutAlign="space-between center"
+>
   <div
     fxFlex="22"
     fxLayout="row"

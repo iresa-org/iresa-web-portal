@@ -1,4 +1,9 @@
-<form class="search-form" matAutocompleteOrigin #origin="matAutocompleteOrigin">
+<form
+  *ngIf="{ valueChange: valueChange$ | async }"
+  class="search-form"
+  matAutocompleteOrigin
+  #origin="matAutocompleteOrigin"
+>
   <div class="text-input-container">
     <div class="search-icon-container">
       <img class="search-icon" src="assets/search-icon.png" alt="search-icon" />

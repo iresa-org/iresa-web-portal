@@ -50,7 +50,6 @@
     "angularx-qrcode": "^10.0.6",
     "core-js": "^3.6.5",
     "rxjs": "~6.6.2",
-    "subsink": "^1.0.1",
     "zone.js": "^0.10.3"
   },
   "devDependencies": {

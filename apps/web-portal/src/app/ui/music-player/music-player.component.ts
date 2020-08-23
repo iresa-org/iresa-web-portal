@@ -4,16 +4,16 @@ import {
   ChangeDetectionStrategy,
   NgZone,
   OnDestroy,
-  HostListener
+  HostListener,
 } from '@angular/core';
 import { WindowRef, ScriptLoaderService } from '@iresa/shared/utilities';
 import { SpotifyService } from '@iresa/ngx-spotify';
 import { MusicPlayer, PlayerStates } from './music-player.config';
 import { WebPlaybackFacade, DashboardFacade } from '@iresa/web-portal-data';
-import { SubSink } from 'subsink';
-import { skip } from 'rxjs/operators';
+import { skip, tap } from 'rxjs/operators';
 import { MatSliderChange } from '@angular/material/slider';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 declare var Spotify: any;
 
@@ -21,13 +21,13 @@ declare var Spotify: any;
   selector: 'iresa-portal-music-player',
   templateUrl: './music-player.component.html',
   styleUrls: ['./music-player.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MusicPlayerComponent implements OnInit, OnDestroy {
   private musicPlayerCtrl: MusicPlayer;
 
-  subs = new SubSink();
   manTogglePlay = false;
+  volChange$: Observable<number>;
 
   constructor(
     private winRef: WindowRef,
@@ -64,11 +64,9 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   }
 
   onVolChange() {
-    this.subs.add(
-      this.vol$
-        .pipe(skip(1))
-        .subscribe(val => this.musicPlayerCtrl.musicPlayer.setVolume(val))
-    );
+    this.volChange$ = this.vol$
+      .pipe(skip(1))
+      .pipe(tap((val) => this.musicPlayerCtrl.musicPlayer.setVolume(val)));
   }
 
   loadScript() {
@@ -76,7 +74,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       .load({
         src: 'https://sdk.scdn.co/spotify-player.js',
         name: 'spotify-player.js',
-        loaded: false
+        loaded: false,
       })
       .subscribe();
   }
@@ -89,7 +87,6 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.disconnectPlayer();
     this.winRef.nativeWindow.MusicPlayer = null;
-    this.subs.unsubscribe();
   }
 
   disconnectPlayer() {
@@ -133,7 +130,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
     });
   };
 
-  setPlayerInfo = data => {
+  setPlayerInfo = (data) => {
     this.ngZone.run(() => {
       const authToken = this.musicPlayerCtrl.authToken;
       const device_id = this.musicPlayerCtrl.device_id;
@@ -164,9 +161,9 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       const token = window['MusicPlayer'].authToken;
       const player = new Spotify.Player({
         name: 'Iresa Web Playback',
-        getOAuthToken: cb => {
+        getOAuthToken: (cb) => {
           cb(token);
-        }
+        },
       });
 
       // Error handling
@@ -184,7 +181,7 @@ export class MusicPlayerComponent implements OnInit, OnDestroy {
       });
 
       // Playback status updates
-      player.addListener('player_state_changed', state => {
+      player.addListener('player_state_changed', (state) => {
         // console.log(state);
         window['MusicPlayer'].handleStateChanges(state);
       });

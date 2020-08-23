@@ -1,15 +1,10 @@
-import {
-  Component,
-  OnInit,
-  ChangeDetectionStrategy,
-  OnDestroy,
-} from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { debounceTime, tap, startWith, filter } from 'rxjs/operators';
 import { DashboardFacade } from '@iresa/web-portal-data';
-import { SubSink } from 'subsink';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'iresa-portal-music-search',
@@ -17,9 +12,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./music-search.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MusicSearchComponent implements OnInit, OnDestroy {
+export class MusicSearchComponent implements OnInit {
   searchInput = new FormControl();
-  subs = new SubSink();
+  valueChange$: Observable<any>;
 
   constructor(private dbFacade: DashboardFacade, private router: Router) {}
 
@@ -27,24 +22,16 @@ export class MusicSearchComponent implements OnInit, OnDestroy {
     this.onValueChange();
   }
 
-  ngOnDestroy(): void {
-    this.subs.unsubscribe();
-  }
-
   get searchResults$() {
     return this.dbFacade.searchResults$;
   }
 
   onValueChange() {
-    this.subs.add(
-      this.searchInput.valueChanges
-        .pipe(
-          debounceTime(500),
-          startWith(''),
-          filter((val) => val && typeof val === 'string' && val.trim() !== ''),
-          tap((value) => this.dbFacade.search(value.trim()))
-        )
-        .subscribe()
+    this.valueChange$ = this.searchInput.valueChanges.pipe(
+      debounceTime(500),
+      startWith(''),
+      filter((val) => val && typeof val === 'string' && val.trim() !== ''),
+      tap((value) => this.dbFacade.search(value.trim()))
     );
   }
 

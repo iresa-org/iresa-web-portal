@@ -31,7 +31,7 @@
               "apps/web-portal/src/styles.scss"
             ],
             "scripts": [],
-            "allowedCommonJsDependencies": ["subsink", "qrcode"]
+            "allowedCommonJsDependencies": ["qrcode"]
           },
           "configurations": {
             "production": {
