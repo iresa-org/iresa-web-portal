@@ -1,72 +1,39 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-export enum StationsActionTypes {
-  LoadStations = '[Stations] Load Stations',
-  StationsLoaded = '[Stations] Stations Loaded',
-  StationsLoadError = '[Stations] Stations Load Error',
-  SetSelectedId = '[Stations] Set Selected Id',
-  LoadStationDetails = '[Stations] Load Station Details',
-  StationDetailsLoaded = '[Stations] Station Details Loaded',
-  StationDetailsLoadError = '[Stations] Station Details Load Error',
-  UpdateStationDetails = '[Stations] Update Station Details'
-}
+export const loadStations = createAction(
+  '[Stations] Load Stations',
+  props<any>()
+);
 
-export class LoadStations implements Action {
-  readonly type = StationsActionTypes.LoadStations;
-  constructor(public payload: any) {}
-}
+export const stationsLoaded = createAction(
+  '[Stations] Stations Loaded',
+  props<{ stations: any[] }>()
+);
 
-export class StationsLoadError implements Action {
-  readonly type = StationsActionTypes.StationsLoadError;
-  constructor(public payload: any) {}
-}
+export const stationsLoadError = createAction(
+  '[Stations] Stations Load Error',
+  props<any>()
+);
 
-export class StationsLoaded implements Action {
-  readonly type = StationsActionTypes.StationsLoaded;
-  constructor(public payload: any) {}
-}
+export const setSelectedId = createAction(
+  '[Stations] Set Selected Id',
+  props<{ id: string }>()
+);
 
-export class SetSelectedId implements Action {
-  readonly type = StationsActionTypes.SetSelectedId;
-  constructor(public payload) {}
-}
+export const loadStationDetails = createAction(
+  '[Stations] Load Station Details'
+);
 
-export class LoadStationDetails implements Action {
-  readonly type = StationsActionTypes.LoadStationDetails;
-}
+export const stationDetailsLoaded = createAction(
+  '[Stations] Station Details Loaded',
+  props<{ station: any }>()
+);
 
-export class StationDetailsLoaded implements Action {
-  readonly type = StationsActionTypes.StationDetailsLoaded;
-  constructor(public payload) {}
-}
+export const stationDetailsLoadError = createAction(
+  '[Stations] Station Details Load Error'
+);
 
-export class StationDetailsLoadError implements Action {
-  readonly type = StationsActionTypes.StationDetailsLoadError;
-  constructor() {}
-}
-
-export class UpdateStationDetails implements Action {
-  readonly type = StationsActionTypes.UpdateStationDetails;
-  constructor(public payload) {}
-}
-
-export type StationsAction =
-  | LoadStations
-  | StationsLoaded
-  | StationsLoadError
-  | SetSelectedId
-  | LoadStationDetails
-  | StationDetailsLoaded
-  | StationDetailsLoadError
-  | UpdateStationDetails;
-
-export const fromStationsActions = {
-  LoadStations,
-  StationsLoaded,
-  StationsLoadError,
-  SetSelectedId,
-  LoadStationDetails,
-  StationDetailsLoaded,
-  StationDetailsLoadError,
-  UpdateStationDetails
-};
+export const updateStationDetails = createAction(
+  '[Stations] Update Station Details',
+  props<{ station }>()
+);

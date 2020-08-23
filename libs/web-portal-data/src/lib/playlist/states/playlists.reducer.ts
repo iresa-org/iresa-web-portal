@@ -1,4 +1,5 @@
-import { PlaylistsAction, PlaylistsActionTypes } from './playlists.actions';
+import * as PlaylistsAction from './playlists.actions';
+import { Action, on, createReducer } from '@ngrx/store';
 
 export const PLAYLISTS_FEATURE_KEY = 'playlists';
 
@@ -26,78 +27,50 @@ export const initialState: PlaylistsState = {
   list: [],
   prevIdx: -1,
   loaded: false,
-  tracksLoaded: false
+  tracksLoaded: false,
 };
 
-export function reducer(
-  state: PlaylistsState = initialState,
-  action: PlaylistsAction
-): PlaylistsState {
-  switch (action.type) {
-    case PlaylistsActionTypes.PlaylistsLoaded: {
-      state = {
-        ...state,
-        list: action.payload,
-        loaded: true
-      };
-      break;
-    }
-    case PlaylistsActionTypes.GetPlaylistTracks: {
-      state = {
-        ...state,
-        list: state.list.map(item =>
-          item.id === action.payload.id ? { ...item, tracks: null } : item
-        ),
-        tracksLoaded: false
-      };
-      break;
-    }
-    case PlaylistsActionTypes.GetPlaylistTracksSuccess: {
-      state = {
-        ...state,
-        list: state.list.map(item =>
-          item.id === action.payload.id
-            ? { ...item, tracks: action.payload.tracks }
-            : item
-        ),
-        tracksLoaded: true
-      };
-      break;
-    }
-    case PlaylistsActionTypes.DeletePlaylistTrack: {
-      state = {
-        ...state,
-        list: state.list.map(item =>
-          item.id === action.payload.playlistId
-            ? {
-                ...item,
-                tracks: item.tracks.filter(
-                  (_, i) => i !== action.payload.position
-                )
-              }
-            : item
-        )
-      };
-      break;
-    }
-    case PlaylistsActionTypes.AddToPlaylist: {
-      state = {
-        ...state,
-        list: state.list.map(item =>
-          item.id === action.payload.playlistId
-            ? { ...item, tracks: [...item.tracks, action.payload.track] }
-            : item
-        )
-      };
-      break;
-    }
-    case PlaylistsActionTypes.CreatePlaylistSuccess: {
-      state = {
-        ...state,
-        list: [...state.list, action.payload]
-      };
-      break;
-    }
-  }
-  return state;
+const playlistsReducer = createReducer(
+  initialState,
+  on(PlaylistsAction.playlistsLoaded, (state, payload) => ({
+    ...state,
+    list: payload.playlists,
+    loaded: true,
+  })),
+  on(PlaylistsAction.getPlaylistTracksSuccess, (state, payload) => ({
+    ...state,
+    list: state.list.map((item) =>
+      item.id === payload.playlist.id
+        ? { ...item, tracks: payload.tracks }
+        : item
+    ),
+    tracksLoaded: true,
+  })),
+  on(PlaylistsAction.deletePlaylistTrack, (state, payload) => ({
+    ...state,
+    list: state.list.map((item) =>
+      item.id === payload.playlistId
+        ? {
+            ...item,
+            tracks: item.tracks.filter((_, i) => i !== payload.position),
+          }
+        : item
+    ),
+  })),
+  on(PlaylistsAction.addToPlaylist, (state, payload) => ({
+    ...state,
+    list: state.list.map((item) =>
+      item.id === payload.playlistId
+        ? { ...item, tracks: [...item.tracks, payload.track] }
+        : item
+    ),
+  })),
+  on(PlaylistsAction.createPlaylistSuccess, (state, payload) => ({
+    ...state,
+    list: [...state.list, payload.playlist],
+  }))
+);
+
+export function reducer(state: PlaylistsState | undefined, action: Action) {
+  return playlistsReducer(state, action);
 }

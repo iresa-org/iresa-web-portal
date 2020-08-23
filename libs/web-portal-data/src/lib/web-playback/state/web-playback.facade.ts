@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { select, Store } from '@ngrx/store';
 import { webPlaybackQuery } from './web-playback.selectors';
 import { WebPlaybackPartialState } from './web-playback.reducer';
-import { fromWebPlaybackActions } from './web-playback.actions';
+import * as WebPlaybackAction from './web-playback.actions';
 
 @Injectable()
 export class WebPlaybackFacade {
@@ -14,27 +14,27 @@ export class WebPlaybackFacade {
 
   constructor(private store: Store<WebPlaybackPartialState>) {}
 
-  play(data) {
-    this.store.dispatch(new fromWebPlaybackActions.Play(data));
+  play(songURIs) {
+    this.store.dispatch(WebPlaybackAction.play({ songURIs }));
   }
 
-  setPlaying(val) {
-    this.store.dispatch(new fromWebPlaybackActions.SetPlaying(val));
+  setPlaying(playing) {
+    this.store.dispatch(WebPlaybackAction.setPlaying({ playing }));
   }
 
   toggleMute() {
-    this.store.dispatch(new fromWebPlaybackActions.ToggleMute());
+    this.store.dispatch(WebPlaybackAction.toggleMute());
   }
 
-  setVol(data) {
-    this.store.dispatch(new fromWebPlaybackActions.SetVol(data));
+  setVol(vol) {
+    this.store.dispatch(WebPlaybackAction.setVol({ vol }));
   }
 
-  setPlayerInfo(data) {
-    this.store.dispatch(new fromWebPlaybackActions.SetPlayerInfo(data));
+  setPlayerInfo(player) {
+    this.store.dispatch(WebPlaybackAction.setPlayerInfo({ player }));
   }
 
-  setTrackWindow(data) {
-    this.store.dispatch(new fromWebPlaybackActions.SetTrackWindow(data));
+  setTrackWindow(trackWindow) {
+    this.store.dispatch(WebPlaybackAction.setTrackWindow({ trackWindow }));
   }
 }

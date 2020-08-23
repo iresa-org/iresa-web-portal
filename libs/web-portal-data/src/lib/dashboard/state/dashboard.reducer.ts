@@ -1,5 +1,6 @@
-import { DashboardAction, DashboardActionTypes } from './dashboard.actions';
 import { menuItems } from './config/menu-items';
+import { createReducer, on, Action } from '@ngrx/store';
+import * as DashboardAction from './dashboard.actions';
 
 export const DASHBOARD_FEATURE_KEY = 'dashboard';
 
@@ -36,55 +37,36 @@ export const initialState: DashboardState = {
   loading: false,
 };
 
-export function reducer(
-  state: DashboardState = initialState,
-  action: DashboardAction
-): DashboardState {
-  switch (action.type) {
-    case DashboardActionTypes.Search: {
-      state = {
-        ...state,
-        searchLoading: true,
-      };
-      break;
-    }
-    case DashboardActionTypes.SearchSuccess: {
-      state = {
-        ...state,
-        searchLoading: false,
-        searchItems: action.payload,
-      };
-      break;
-    }
-    case DashboardActionTypes.SearchError: {
-      state = {
-        ...state,
-        searchLoading: false,
-        searchItems: [],
-      };
-      break;
-    }
-    case DashboardActionTypes.SetSelectedMenuItems: {
-      state = {
-        ...state,
-        selectedMenuItems: action.payload,
-      };
-      break;
-    }
-    case DashboardActionTypes.SetLoading: {
-      state = {
-        ...state,
-        loading: action.payload,
-      };
-      break;
-    }
-    case DashboardActionTypes.SetUseSample: {
-      state = {
-        ...state,
-        useSample: action.payload,
-      };
-      break;
-    }
-  }
-  return state;
+const dashboardReducer = createReducer(
+  initialState,
+  on(DashboardAction.search, (state, payload) => ({
+    ...state,
+    searchLoading: true,
+  })),
+  on(DashboardAction.searchSuccess, (state, payload) => ({
+    ...state,
+    searchLoading: false,
+    searchItems: payload.results,
+  })),
+  on(DashboardAction.searchError, (state, payload) => ({
+    ...state,
+    searchLoading: false,
+    searchItems: [],
+  })),
+  on(DashboardAction.setSelectedMenuItems, (state, payload) => ({
+    ...state,
+    selectedMenuItems: payload.menu,
+  })),
+  on(DashboardAction.setLoading, (state, payload) => ({
+    ...state,
+    loading: payload.loading,
+  })),
+  on(DashboardAction.setUseSample, (state, payload) => ({
+    ...state,
+    useSample: payload.useSample,
+  }))
+);
+
+export function reducer(state: DashboardState | undefined, action: Action) {
+  return dashboardReducer(state, action);
 }

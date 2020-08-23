@@ -4,9 +4,11 @@ import { select, Store } from '@ngrx/store';
 
 import { PlaylistsPartialState } from './playlists.reducer';
 import { playlistsQuery } from './playlists.selectors';
-import { fromPlaylistsActions } from './playlists.actions';
+import * as PlaylistsAction from './playlists.actions';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PlaylistsFacade {
   loaded$ = this.store.pipe(select(playlistsQuery.getLoaded));
   tracksLoaded$ = this.store.pipe(select(playlistsQuery.getTracksLoaded));
@@ -16,23 +18,23 @@ export class PlaylistsFacade {
   constructor(private store: Store<PlaylistsPartialState>) {}
 
   loadAll() {
-    this.store.dispatch(new fromPlaylistsActions.LoadPlaylists());
+    this.store.dispatch(PlaylistsAction.loadPlaylists());
   }
 
-  createPlaylist(data) {
-    this.store.dispatch(new fromPlaylistsActions.CreatePlaylist(data));
+  createPlaylist(playlist) {
+    this.store.dispatch(PlaylistsAction.createPlaylist({ playlist }));
   }
 
   addToPlaylist(data) {
-    this.store.dispatch(new fromPlaylistsActions.AddToPlaylist(data));
+    this.store.dispatch(PlaylistsAction.addToPlaylist(data));
   }
 
-  getPlaylistTracks(data) {
-    this.store.dispatch(new fromPlaylistsActions.GetPlaylistTracks(data));
+  getPlaylistTracks(id) {
+    this.store.dispatch(PlaylistsAction.getPlaylistTracks({ id }));
   }
 
   deletePlaylistTrack(data) {
-    this.store.dispatch(new fromPlaylistsActions.DeletePlaylistTrack(data));
+    this.store.dispatch(PlaylistsAction.deletePlaylistTrack(data));
   }
 
   getPlaylist(id) {

@@ -1,36 +1,38 @@
 import { Injectable } from '@angular/core';
-import { Effect, Actions } from '@ngrx/effects';
-import { DataPersistence } from '@nrwl/angular';
-import {
-  WebPlaybackPartialState,
-  WEB_PLAYBACK_FEATURE_KEY
-} from './web-playback.reducer';
-import {
-  WebPlaybackActionTypes,
-  fromWebPlaybackActions,
-  Play
-} from './web-playback.actions';
+import { createEffect, Actions, ofType } from '@ngrx/effects';
+import { WEB_PLAYBACK_FEATURE_KEY } from './web-playback.reducer';
 import { SpotifyPlaybackService } from '@iresa/ngx-spotify';
-import { map } from 'rxjs/operators';
+import { map, withLatestFrom } from 'rxjs/operators';
+import * as WebPlaybackAction from './web-playback.actions';
+import { fetch } from '@nrwl/angular';
+import { Store } from '@ngrx/store';
 
 @Injectable()
 export class WebPlaybackEffects {
-  @Effect() play$ = this.dataPersistence.fetch(WebPlaybackActionTypes.Play, {
-    run: (action: Play, state: WebPlaybackPartialState) => {
-      const player = state[WEB_PLAYBACK_FEATURE_KEY].playerInfo;
-      return this.spotifyService
-        .play(player.authToken, player.device_id, action.payload)
-        .pipe(map(_ => new fromWebPlaybackActions.PlaySuccess()));
-    },
+  play$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(WebPlaybackAction.play),
+      withLatestFrom(this.store$),
+      fetch({
+        // provides an action
+        run: (action, state) => {
+          const player = state[WEB_PLAYBACK_FEATURE_KEY].playerInfo;
+          return this.spotifyService
+            .play(player.authToken, player.device_id, action.songURIs)
+            .pipe(map((_) => WebPlaybackAction.playSuccess()));
+        },
 
-    onError: (action: Play, error) => {
-      return new fromWebPlaybackActions.PlayError();
-    }
-  });
+        onError: (action, error) => {
+          // dispatch an undo action to undo the changes in the client state
+          return WebPlaybackAction.playError();
+        },
+      })
+    )
+  );
 
   constructor(
     private actions$: Actions,
-    private spotifyService: SpotifyPlaybackService,
-    private dataPersistence: DataPersistence<WebPlaybackPartialState>
+    private store$: Store<any>,
+    private spotifyService: SpotifyPlaybackService
   ) {}
 }

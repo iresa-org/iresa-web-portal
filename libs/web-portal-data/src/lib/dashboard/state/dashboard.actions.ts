@@ -1,57 +1,25 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-export enum DashboardActionTypes {
-  Search = '[Dashboard] Search',
-  SearchSuccess = '[Dashboard] Search Success',
-  SearchError = '[Dashboard] Search Error',
-  SetSelectedMenuItems = '[Dashboard] Set Selected Menu Items',
-  SetLoading = '[Dashboard] Set Loading',
-  SetUseSample = '[Dashboard] Set Use Sample'
-}
+export const search = createAction('[Dashboard] Search', props<{ search }>());
 
-export class Search implements Action {
-  readonly type = DashboardActionTypes.Search;
-  constructor(public payload: any) {}
-}
+export const searchSuccess = createAction(
+  '[Dashboard] Search Success',
+  props<{ results }>()
+);
 
-export class SearchSuccess implements Action {
-  readonly type = DashboardActionTypes.SearchSuccess;
-  constructor(public payload: any) {}
-}
+export const searchError = createAction('[Dashboard] Search Error');
 
-export class SearchError implements Action {
-  readonly type = DashboardActionTypes.SearchError;
-  constructor() {}
-}
+export const setSelectedMenuItems = createAction(
+  '[Dashboard] Set Selected Menu Items',
+  props<{ menu }>()
+);
 
-export class SetSelectedMenuItems implements Action {
-  readonly type = DashboardActionTypes.SetSelectedMenuItems;
-  constructor(public payload: any) {}
-}
+export const setLoading = createAction(
+  '[Dashboard] Set Loading',
+  props<{ loading }>()
+);
 
-export class SetLoading implements Action {
-  readonly type = DashboardActionTypes.SetLoading;
-  constructor(public payload: any) {}
-}
-
-export class SetUseSample implements Action {
-  readonly type = DashboardActionTypes.SetUseSample;
-  constructor(public payload: any) {}
-}
-
-export type DashboardAction =
-  | Search
-  | SearchSuccess
-  | SearchError
-  | SetSelectedMenuItems
-  | SetLoading
-  | SetUseSample;
-
-export const fromDashboardActions = {
-  Search,
-  SearchSuccess,
-  SearchError,
-  SetSelectedMenuItems,
-  SetLoading,
-  SetUseSample
-};
+export const setUseSample = createAction(
+  '[Dashboard] Set Use Sample',
+  props<{ useSample }>()
+);

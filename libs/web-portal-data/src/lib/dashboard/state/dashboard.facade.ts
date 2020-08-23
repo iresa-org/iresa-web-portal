@@ -4,9 +4,11 @@ import { select, Store } from '@ngrx/store';
 
 import { DashboardPartialState } from './dashboard.reducer';
 import { dashboardQuery } from './dashboard.selectors';
-import { fromDashboardActions } from './dashboard.actions';
+import * as DashboardAction from './dashboard.actions';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DashboardFacade {
   menuItems$ = this.store.pipe(select(dashboardQuery.getMenuItems));
   product$ = this.store.pipe(select(dashboardQuery.getProduct));
@@ -15,16 +17,16 @@ export class DashboardFacade {
 
   constructor(private store: Store<DashboardPartialState>) {}
 
-  search(val) {
-    this.store.dispatch(new fromDashboardActions.Search(val));
+  search(search) {
+    this.store.dispatch(DashboardAction.search({ search }));
   }
 
-  setSelectedMenuItems(val) {
-    this.store.dispatch(new fromDashboardActions.SetSelectedMenuItems(val));
+  setSelectedMenuItems(menu) {
+    this.store.dispatch(DashboardAction.setSelectedMenuItems({ menu }));
   }
 
-  setLoading(val) {
-    this.store.dispatch(new fromDashboardActions.SetLoading(val));
+  setLoading(loading) {
+    this.store.dispatch(DashboardAction.setLoading({ loading }));
   }
 
   getAlbumFromSearch(albumId) {

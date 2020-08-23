@@ -1,4 +1,5 @@
-import { AuthAction, AuthActionTypes } from './auth.actions';
+import { createReducer, on, Action } from '@ngrx/store';
+import * as AuthAction from './auth.actions';
 
 export const AUTH_FEATURE_KEY = 'auth';
 
@@ -22,38 +23,28 @@ export interface AuthPartialState {
 export const initialState: AuthState = {
   loggedIn: false,
   user: null,
-  loading: false
+  loading: false,
 };
 
-export function reducer(
-  state: AuthState = initialState,
-  action: AuthAction
-): AuthState {
-  switch (action.type) {
-    case AuthActionTypes.Login: {
-      state = {
-        ...state,
-        loading: true
-      };
-      break;
-    }
-    case AuthActionTypes.LoginSuccess: {
-      state = {
-        ...state,
-        loggedIn: true,
-        user: action.payload.user,
-        loading: false
-      };
-      break;
-    }
-    case AuthActionTypes.LogoutSuccess: {
-      state = {
-        ...state,
-        loggedIn: false,
-        user: null
-      };
-      break;
-    }
-  }
-  return state;
+const authReducer = createReducer(
+  initialState,
+  on(AuthAction.login, (state, payload) => ({
+    ...state,
+    loading: true,
+  })),
+  on(AuthAction.loginSuccess, (state, payload) => ({
+    ...state,
+    loggedIn: true,
+    user: payload.user,
+    loading: false,
+  })),
+  on(AuthAction.logoutSuccess, (state, payload) => ({
+    ...state,
+    loggedIn: false,
+    user: null,
+  }))
+);
+
+export function reducer(state: AuthState | undefined, action: Action) {
+  return authReducer(state, action);
 }

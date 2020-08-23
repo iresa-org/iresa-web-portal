@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { SearchDataModel } from './config/search-data.model';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class DashboardService {
   constructor() {}
 
   toSearchResult(data: SearchDataModel): any[] {
     // add images for track
-    data.tracks.items.map(item => {
+    data.tracks.items.map((item) => {
       if (!item.images && item.album.images) {
         item.images = item.album.images;
       }
@@ -16,7 +18,7 @@ export class DashboardService {
       ...data.tracks.items,
       ...data.artists.items,
       ...data.albums.items,
-      ...data.playlists.items
+      ...data.playlists.items,
     ];
   }
 }

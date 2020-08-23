@@ -1,96 +1,52 @@
-import { Action } from '@ngrx/store';
+import { props, createAction } from '@ngrx/store';
 
-export enum PlaylistsActionTypes {
-  LoadPlaylists = '[Playlists] Load Playlists',
-  PlaylistsLoaded = '[Playlists] Playlists Loaded',
-  PlaylistsLoadError = '[Playlists] Playlists Load Error',
-  CreatePlaylist = '[Albums] Create Playlist',
-  CreatePlaylistSuccess = '[Albums] Create Playlist Success',
-  CreatePlaylistError = '[Albums] Create Playlist Error',
-  AddToPlaylist = '[Albums] Add To Playlist',
-  GetPlaylistTracks = '[Albums] Get Playlist Tracks',
-  GetPlaylistTracksSuccess = '[Albums] Get Playlist Tracks Success',
-  GetPlaylistTracksError = '[Albums] Get Playlist Tracks Error',
-  DeletePlaylistTrack = '[Albums] Delete Playlist Track'
-}
+export const loadPlaylists = createAction('[Playlists] Load Playlists');
 
-export class LoadPlaylists implements Action {
-  readonly type = PlaylistsActionTypes.LoadPlaylists;
-}
+export const playlistsLoaded = createAction(
+  '[Playlists] Playlists Loaded',
+  props<{ playlists: any[] }>()
+);
 
-export class PlaylistsLoadError implements Action {
-  readonly type = PlaylistsActionTypes.PlaylistsLoadError;
-  constructor(public payload: any) {}
-}
+export const playlistsLoadError = createAction(
+  '[Playlists] Playlists Load Error',
+  props<any>()
+);
 
-export class PlaylistsLoaded implements Action {
-  readonly type = PlaylistsActionTypes.PlaylistsLoaded;
-  constructor(public payload: any[]) {}
-}
+export const createPlaylist = createAction(
+  '[Playlists] Create Playlist',
+  props<{ playlist }>()
+);
 
-export class CreatePlaylist implements Action {
-  readonly type = PlaylistsActionTypes.CreatePlaylist;
-  constructor(public payload: any) {}
-}
+export const createPlaylistSuccess = createAction(
+  '[Playlists] Create Playlist Success',
+  props<any>()
+);
 
-export class CreatePlaylistSuccess implements Action {
-  readonly type = PlaylistsActionTypes.CreatePlaylistSuccess;
-  constructor(public payload: any) {}
-}
+export const createPlaylistError = createAction(
+  '[Playlists] Create Playlist Error',
+  props<any>()
+);
 
-export class CreatePlaylistError implements Action {
-  readonly type = PlaylistsActionTypes.CreatePlaylistError;
-  constructor(public payload: any) {}
-}
+export const addToPlaylist = createAction(
+  '[Playlists] Add To Playlist',
+  props<any>()
+);
 
-export class AddToPlaylist implements Action {
-  readonly type = PlaylistsActionTypes.AddToPlaylist;
-  constructor(public payload: any) {}
-}
+export const getPlaylistTracks = createAction(
+  '[Playlists] Get Playlist Tracks',
+  props<{ id: string }>()
+);
 
-export class GetPlaylistTracks implements Action {
-  readonly type = PlaylistsActionTypes.GetPlaylistTracks;
-  constructor(public payload: any) {}
-}
+export const getPlaylistTracksSuccess = createAction(
+  '[Playlists] Get Playlist Tracks Success',
+  props<{ playlist; tracks }>()
+);
 
-export class GetPlaylistTracksSuccess implements Action {
-  readonly type = PlaylistsActionTypes.GetPlaylistTracksSuccess;
-  constructor(public payload: any) {}
-}
+export const getPlaylistTracksError = createAction(
+  '[Playlists] Get Playlist Tracks Error'
+);
 
-export class GetPlaylistTracksError implements Action {
-  readonly type = PlaylistsActionTypes.GetPlaylistTracksError;
-  constructor() {}
-}
-
-export class DeletePlaylistTrack implements Action {
-  readonly type = PlaylistsActionTypes.DeletePlaylistTrack;
-  constructor(public payload: any) {}
-}
-
-export type PlaylistsAction =
-  | LoadPlaylists
-  | PlaylistsLoaded
-  | PlaylistsLoadError
-  | CreatePlaylist
-  | CreatePlaylistSuccess
-  | CreatePlaylistError
-  | AddToPlaylist
-  | GetPlaylistTracks
-  | GetPlaylistTracksSuccess
-  | GetPlaylistTracksError
-  | DeletePlaylistTrack;
-
-export const fromPlaylistsActions = {
-  LoadPlaylists,
-  PlaylistsLoaded,
-  PlaylistsLoadError,
-  CreatePlaylist,
-  CreatePlaylistSuccess,
-  CreatePlaylistError,
-  AddToPlaylist,
-  GetPlaylistTracks,
-  GetPlaylistTracksSuccess,
-  GetPlaylistTracksError,
-  DeletePlaylistTrack
-};
+export const deletePlaylistTrack = createAction(
+  '[Playlists] Delete Playlist Track',
+  props<any>()
+);

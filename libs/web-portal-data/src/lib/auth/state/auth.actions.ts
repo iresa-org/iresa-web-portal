@@ -1,56 +1,16 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-export enum AuthActionTypes {
-  Login = '[Auth] Login',
-  LoginSuccess = '[Auth] Login Success',
-  LoginError = '[Auth] Login Error',
-  Logout = '[Auth] Logout',
-  LogoutSuccess = '[Auth] Logout Success',
-  LogoutError = '[Auth] Logout Error'
-}
+export const login = createAction('[Auth] Login', props<any>());
 
-export class Login implements Action {
-  readonly type = AuthActionTypes.Login;
-  constructor(public payload: any) {}
-}
+export const loginSuccess = createAction(
+  '[Auth] Login Success',
+  props<{ user: any }>()
+);
 
-export class LoginSuccess implements Action {
-  readonly type = AuthActionTypes.LoginSuccess;
-  constructor(public payload: any) {}
-}
+export const loginError = createAction('[Auth] Login Error', props<any>());
 
-export class LoginError implements Action {
-  readonly type = AuthActionTypes.LoginError;
-  constructor(public payload: any) {}
-}
+export const logout = createAction('[Auth] Logout');
 
-export class Logout implements Action {
-  readonly type = AuthActionTypes.Logout;
-  constructor() {}
-}
+export const logoutSuccess = createAction('[Auth] Logout Success');
 
-export class LogoutSuccess implements Action {
-  readonly type = AuthActionTypes.LogoutSuccess;
-  constructor() {}
-}
-
-export class LogoutError implements Action {
-  readonly type = AuthActionTypes.LogoutError;
-  constructor() {}
-}
-
-export type AuthAction =
-  | Login
-  | LoginSuccess
-  | Logout
-  | LogoutSuccess
-  | LogoutError;
-
-export const fromAuthActions = {
-  Login,
-  LoginSuccess,
-  LoginError,
-  Logout,
-  LogoutSuccess,
-  LogoutError
-};
+export const logoutError = createAction('[Auth] Logout Error');

@@ -4,9 +4,11 @@ import { select, Store } from '@ngrx/store';
 
 import { StationsPartialState } from './stations.reducer';
 import { stationsQuery } from './stations.selectors';
-import { fromStationsActions } from './stations.actions';
+import * as StationsAction from './stations.actions';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class StationsFacade {
   loaded$ = this.store.pipe(select(stationsQuery.getLoaded));
   allStations$ = this.store.pipe(select(stationsQuery.getAllStations));
@@ -16,18 +18,18 @@ export class StationsFacade {
   constructor(private store: Store<StationsPartialState>) {}
 
   loadAll(id) {
-    this.store.dispatch(new fromStationsActions.LoadStations(id));
+    this.store.dispatch(StationsAction.loadStations(id));
   }
 
   setSelectedId(id) {
-    this.store.dispatch(new fromStationsActions.SetSelectedId(id));
+    this.store.dispatch(StationsAction.setSelectedId({ id }));
   }
 
   loadStationDetails() {
-    this.store.dispatch(new fromStationsActions.LoadStationDetails());
+    this.store.dispatch(StationsAction.loadStationDetails());
   }
 
-  updateStationDetails(data) {
-    this.store.dispatch(new fromStationsActions.UpdateStationDetails(data));
+  updateStationDetails(station) {
+    this.store.dispatch(StationsAction.updateStationDetails({ station }));
   }
 }

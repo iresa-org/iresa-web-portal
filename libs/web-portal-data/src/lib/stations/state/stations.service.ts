@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { of } from 'rxjs';
 import { stations } from './stations';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class StationsService {
   constructor() {}
 
@@ -11,6 +13,6 @@ export class StationsService {
   }
 
   getStationDetails(stationId) {
-    return of(stations.find(station => station.id === stationId));
+    return of(stations.find((station) => station.id === stationId));
   }
 }

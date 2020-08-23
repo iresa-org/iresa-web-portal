@@ -1,4 +1,5 @@
-import { AlbumsAction, AlbumsActionTypes } from './albums.actions';
+import * as AlbumsAction from './albums.actions';
+import { createReducer, on, Action } from '@ngrx/store';
 
 export const ALBUMS_FEATURE_KEY = 'albums';
 
@@ -30,73 +31,51 @@ export const initialState: AlbumsState = {
   loaded: false,
   trackList: null,
   tracksLoaded: false,
-  trackPos: -1
+  trackPos: -1,
 };
 
-export function reducer(
-  state: AlbumsState = initialState,
-  action: AlbumsAction
-): AlbumsState {
-  switch (action.type) {
-    case AlbumsActionTypes.LoadAlbums: {
-      state = {
-        ...state,
-        loaded: false,
-        list: []
-      };
-      break;
-    }
-    case AlbumsActionTypes.AlbumsLoaded: {
-      state = {
-        ...state,
-        list: action.payload,
-        loaded: true
-      };
-      break;
-    }
-    case AlbumsActionTypes.LoadAlbum: {
-      state = {
-        ...state,
-        loaded: false,
-        list: []
-      };
-      break;
-    }
-    case AlbumsActionTypes.AlbumLoaded: {
-      state = {
-        ...state,
-        list: action.payload,
-        loaded: true
-      };
-      break;
-    }
-    case AlbumsActionTypes.LoadAlbumTracks: {
-      state = {
-        ...state,
-        tracksLoaded: false,
-        trackList: null
-      };
-      break;
-    }
-    case AlbumsActionTypes.AlbumTracksLoaded: {
-      state = {
-        ...state,
-        trackList: action.payload.tracks,
-        tracksLoaded: true,
-        selectedId: action.payload.albumId
-      };
-      break;
-    }
-    case AlbumsActionTypes.SetAlbumTracks: {
-      state = {
-        ...state,
-        selectedId: action.payload.album.id,
-        trackList: action.payload.album,
-        tracksLoaded: true,
-        trackPos: action.payload.trackPos ? action.payload.trackPos : -1
-      };
-      break;
-    }
-  }
-  return state;
+const albumsReducer = createReducer(
+  initialState,
+  on(AlbumsAction.loadAlbums, (state, payload) => ({
+    ...state,
+    loaded: false,
+    list: [],
+  })),
+  on(AlbumsAction.albumsLoaded, (state, payload) => ({
+    ...state,
+    list: payload.albums,
+    loaded: true,
+  })),
+  on(AlbumsAction.loadAlbum, (state, payload) => ({
+    ...state,
+    loaded: false,
+    list: [],
+  })),
+  on(AlbumsAction.albumLoaded, (state, payload) => ({
+    ...state,
+    list: payload.album,
+    loaded: true,
+  })),
+  on(AlbumsAction.loadAlbumTracks, (state, payload) => ({
+    ...state,
+    tracksLoaded: false,
+    trackList: null,
+  })),
+  on(AlbumsAction.albumTracksLoaded, (state, payload) => ({
+    ...state,
+    trackList: payload.tracks,
+    tracksLoaded: true,
+    selectedId: payload.albumId,
+  })),
+  on(AlbumsAction.setAlbumTracks, (state, payload) => ({
+    ...state,
+    selectedId: payload.album.id,
+    trackList: payload.album,
+    tracksLoaded: true,
+    trackPos: payload.trackPos ? payload.trackPos : -1,
+  }))
+);
+
+export function reducer(state: AlbumsState | undefined, action: Action) {
+  return albumsReducer(state, action);
 }

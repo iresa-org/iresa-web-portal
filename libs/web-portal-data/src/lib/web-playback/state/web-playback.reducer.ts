@@ -1,7 +1,5 @@
-import {
-  WebPlaybackAction,
-  WebPlaybackActionTypes
-} from './web-playback.actions';
+import * as WebPlaybackAction from './web-playback.actions';
+import { on, createReducer, Action } from '@ngrx/store';
 
 export const WEB_PLAYBACK_FEATURE_KEY = 'webPlayback';
 
@@ -31,51 +29,35 @@ export const initialState: WebPlaybackState = {
   lastVol: 1,
   muted: false,
   track_window: null,
-  playerInfo: null
+  playerInfo: null,
 };
 
-export function reducer(
-  state: WebPlaybackState = initialState,
-  action: WebPlaybackAction
-): WebPlaybackState {
-  switch (action.type) {
-    case WebPlaybackActionTypes.SetPlaying: {
-      state = {
-        ...state,
-        playing: action.payload
-      };
-      break;
-    }
-    case WebPlaybackActionTypes.SetVol: {
-      state = {
-        ...state,
-        vol: action.payload
-      };
-      break;
-    }
-    case WebPlaybackActionTypes.ToggleMute: {
-      state = {
-        ...state,
-        vol: state.muted ? state.lastVol : 0,
-        lastVol: !state.muted ? state.vol : state.lastVol,
-        muted: !state.muted
-      };
-      break;
-    }
-    case WebPlaybackActionTypes.SetPlayerInfo: {
-      state = {
-        ...state,
-        playerInfo: action.payload
-      };
-      break;
-    }
-    case WebPlaybackActionTypes.SetTrackWindow: {
-      state = {
-        ...state,
-        track_window: action.payload
-      };
-      break;
-    }
-  }
-  return state;
+const webPlaybackReducer = createReducer(
+  initialState,
+  on(WebPlaybackAction.setPlaying, (state, payload) => ({
+    ...state,
+    playing: payload.playing,
+  })),
+  on(WebPlaybackAction.setVol, (state, payload) => ({
+    ...state,
+    vol: payload.vol,
+  })),
+  on(WebPlaybackAction.toggleMute, (state, payload) => ({
+    ...state,
+    vol: state.muted ? state.lastVol : 0,
+    lastVol: !state.muted ? state.vol : state.lastVol,
+    muted: !state.muted,
+  })),
+  on(WebPlaybackAction.setPlayerInfo, (state, payload) => ({
+    ...state,
+    playerInfo: payload.player,
+  })),
+  on(WebPlaybackAction.setTrackWindow, (state, payload) => ({
+    ...state,
+    track_window: payload.trackWindow,
+  }))
+);
+
+export function reducer(state: WebPlaybackState | undefined, action: Action) {
+  return webPlaybackReducer(state, action);
 }

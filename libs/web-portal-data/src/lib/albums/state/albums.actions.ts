@@ -1,113 +1,66 @@
-import { Action } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
-export enum AlbumsActionTypes {
-  LoadAlbums = '[Albums] Load Albums',
-  AlbumsLoaded = '[Albums] Albums Loaded',
-  AlbumsLoadError = '[Albums] Albums Load Error',
-  LoadAlbum = '[Albums] Load Album',
-  AlbumLoaded = '[Albums] Album Loaded',
-  AlbumLoadError = '[Albums] Album Load Error',
-  LoadAlbumTracks = '[Albums] Load Album Tracks',
-  AlbumTracksLoaded = '[Albums] Album Tracks Loaded',
-  AlbumTracksLoadError = '[Albums] Album Tracks Load Error',
-  SetAlbumTracks = '[Albums] Set Album Tracks',
-  LoadPlaylistTracks = '[Albums] Load Playlist Tracks',
-  PlaylistLoaded = '[Albums] Playlist Loaded',
-  PlaylistLoadError = '[Albums] Playlist Load Error'
-}
+export const loadAlbums = createAction(
+  '[Albums] Load Albums',
+  props<{ artistId; useSample? }>()
+);
 
-export class LoadAlbums implements Action {
-  readonly type = AlbumsActionTypes.LoadAlbums;
-  constructor(public payload: any) {}
-}
+export const albumsLoaded = createAction(
+  '[Albums] Albums Loaded',
+  props<{ albums }>()
+);
 
-export class AlbumsLoadError implements Action {
-  readonly type = AlbumsActionTypes.AlbumsLoadError;
-  constructor(public payload: any) {}
-}
+export const albumsLoadError = createAction(
+  '[Albums] Albums Load Error',
+  props<any>()
+);
 
-export class AlbumsLoaded implements Action {
-  readonly type = AlbumsActionTypes.AlbumsLoaded;
-  constructor(public payload: any) {}
-}
+export const loadAlbum = createAction(
+  '[Albums] Load Album',
+  props<{ albumId; useSample? }>()
+);
 
-export class LoadAlbum implements Action {
-  readonly type = AlbumsActionTypes.LoadAlbum;
-  constructor(public payload: any) {}
-}
+export const albumLoaded = createAction(
+  '[Albums] Album Loaded',
+  props<{ album }>()
+);
 
-export class AlbumLoadError implements Action {
-  readonly type = AlbumsActionTypes.AlbumLoadError;
-  constructor(public payload: any) {}
-}
+export const albumLoadError = createAction(
+  '[Albums] Album Load Error',
+  props<any>()
+);
 
-export class AlbumLoaded implements Action {
-  readonly type = AlbumsActionTypes.AlbumLoaded;
-  constructor(public payload: any) {}
-}
+export const loadAlbumTracks = createAction(
+  '[Albums] Load Album Tracks',
+  props<{ album }>()
+);
 
-export class LoadAlbumTracks implements Action {
-  readonly type = AlbumsActionTypes.LoadAlbumTracks;
-  constructor(public payload: any) {}
-}
+export const albumTracksLoaded = createAction(
+  '[Albums] Album Tracks Loaded',
+  props<any>()
+);
 
-export class AlbumTracksLoadError implements Action {
-  readonly type = AlbumsActionTypes.AlbumTracksLoadError;
-  constructor(public payload: any) {}
-}
+export const albumTracksLoadError = createAction(
+  '[Albums] Album Tracks Load Error',
+  props<any>()
+);
 
-export class AlbumTracksLoaded implements Action {
-  readonly type = AlbumsActionTypes.AlbumTracksLoaded;
-  constructor(public payload: any) {}
-}
+export const setAlbumTracks = createAction(
+  '[Albums] Set Album Tracks',
+  props<any>()
+);
 
-export class SetAlbumTracks implements Action {
-  readonly type = AlbumsActionTypes.SetAlbumTracks;
-  constructor(public payload: any) {}
-}
+export const loadPlaylistTracks = createAction(
+  '[Albums] Load Playlist Tracks',
+  props<any>()
+);
 
-export class LoadPlaylistTracks implements Action {
-  readonly type = AlbumsActionTypes.LoadPlaylistTracks;
-  constructor(public payload: any) {}
-}
+export const playlistLoaded = createAction(
+  '[Albums] Playlist Loaded',
+  props<any>()
+);
 
-export class PlaylistLoaded implements Action {
-  readonly type = AlbumsActionTypes.PlaylistLoaded;
-  constructor(public payload: any) {}
-}
-
-export class PlaylistLoadError implements Action {
-  readonly type = AlbumsActionTypes.PlaylistLoadError;
-  constructor(public payload: any) {}
-}
-
-export type AlbumsAction =
-  | LoadAlbums
-  | AlbumsLoaded
-  | AlbumsLoadError
-  | LoadAlbum
-  | AlbumLoaded
-  | AlbumLoadError
-  | LoadAlbumTracks
-  | AlbumTracksLoadError
-  | AlbumTracksLoaded
-  | SetAlbumTracks
-  | LoadPlaylistTracks
-  | PlaylistLoaded
-  | PlaylistLoadError;
-
-export const fromAlbumsActions = {
-  LoadAlbums,
-  AlbumsLoaded,
-  AlbumsLoadError,
-  LoadAlbum,
-  AlbumLoaded,
-  AlbumLoadError,
-  LoadAlbumTracks,
-  AlbumTracksLoadError,
-  AlbumTracksLoaded,
-  SetAlbumTracks,
-  LoadPlaylistTracks,
-  PlaylistLoaded,
-  PlaylistLoadError
-};
+export const playlistLoadError = createAction(
+  '[Albums] Playlist Load Error',
+  props<any>()
+);

@@ -1,4 +1,5 @@
-import { StationsAction, StationsActionTypes } from './stations.actions';
+import * as StationsAction from './stations.actions';
+import { createReducer, on, Action } from '@ngrx/store';
 
 export const STATIONS_FEATURE_KEY = 'stations';
 
@@ -26,51 +27,38 @@ export const initialState: StationsState = {
   list: [],
   loaded: false,
   stationLoaded: false,
-  stationDetails: null
+  stationDetails: null,
 };
 
-export function reducer(
-  state: StationsState = initialState,
-  action: StationsAction
-): StationsState {
-  switch (action.type) {
-    case StationsActionTypes.StationsLoaded: {
-      state = {
-        ...state,
-        list: action.payload,
-        loaded: true
-      };
-      break;
-    }
-    case StationsActionTypes.SetSelectedId: {
-      state = {
-        ...state,
-        selectedId: action.payload
-      };
-      break;
-    }
-    case StationsActionTypes.LoadStationDetails: {
-      state = {
-        ...state,
-        stationLoaded: false
-      };
-      break;
-    }
-    case StationsActionTypes.StationDetailsLoaded: {
-      state = {
-        ...state,
-        stationLoaded: true,
-        stationDetails: action.payload
-      };
-      break;
-    }
-    case StationsActionTypes.UpdateStationDetails: {
-      state = {
-        ...state,
-        stationDetails: { ...state.stationDetails, ...action.payload }
-      };
-      break;
-    }
-  }
-  return state;
+const stationsReducer = createReducer(
+  initialState,
+  on(StationsAction.stationsLoaded, (state, payload) => {
+    const s = null;
+    return {
+      ...state,
+      list: payload.stations,
+      loaded: true,
+    };
+  }),
+  on(StationsAction.setSelectedId, (state, payload) => ({
+    ...state,
+    selectedId: payload.id,
+  })),
+  on(StationsAction.loadStationDetails, (state, payload) => ({
+    ...state,
+    stationLoaded: false,
+  })),
+  on(StationsAction.stationDetailsLoaded, (state, payload) => ({
+    ...state,
+    stationLoaded: true,
+    stationDetails: payload.station,
+  })),
+  on(StationsAction.updateStationDetails, (state, payload) => ({
+    ...state,
+    stationDetails: { ...state.stationDetails, ...payload.station },
+  }))
+);
+
+export function reducer(state: StationsState | undefined, action: Action) {
+  return stationsReducer(state, action);
 }

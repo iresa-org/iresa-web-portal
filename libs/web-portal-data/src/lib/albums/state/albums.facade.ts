@@ -4,9 +4,11 @@ import { select, Store } from '@ngrx/store';
 
 import { AlbumsPartialState } from './albums.reducer';
 import { albumsQuery } from './albums.selectors';
-import { fromAlbumsActions } from './albums.actions';
+import * as AlbumsAction from './albums.actions';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AlbumsFacade {
   loaded$ = this.store.pipe(select(albumsQuery.getLoaded));
   tracksLoaded$ = this.store.pipe(select(albumsQuery.getTracksLoaded));
@@ -16,18 +18,18 @@ export class AlbumsFacade {
   constructor(private store: Store<AlbumsPartialState>) {}
 
   loadAll(artistId) {
-    this.store.dispatch(new fromAlbumsActions.LoadAlbums(artistId));
+    this.store.dispatch(AlbumsAction.loadAlbums({ artistId }));
   }
 
   loadAlbum(albumId) {
-    this.store.dispatch(new fromAlbumsActions.LoadAlbum(albumId));
+    this.store.dispatch(AlbumsAction.loadAlbum({ albumId }));
   }
 
-  loadAlbumTracks(data) {
-    this.store.dispatch(new fromAlbumsActions.LoadAlbumTracks(data));
+  loadAlbumTracks(album) {
+    this.store.dispatch(AlbumsAction.loadAlbumTracks({ album }));
   }
 
   loadPlaylistTracks(data) {
-    this.store.dispatch(new fromAlbumsActions.LoadPlaylistTracks(data));
+    this.store.dispatch(AlbumsAction.loadPlaylistTracks(data));
   }
 }

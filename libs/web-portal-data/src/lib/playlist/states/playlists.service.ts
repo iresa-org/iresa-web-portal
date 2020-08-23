@@ -4,7 +4,9 @@ import { map } from 'rxjs/operators';
 import { SpotifyService } from '@iresa/ngx-spotify';
 import { playlists } from './playlists';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class PlaylistsService {
   constructor(private spotifyService: SpotifyService) {}
 
@@ -23,8 +25,8 @@ export class PlaylistsService {
     return this.spotifyService
       .getPlaylistTracks(playlist.id, { limit: 10 })
       .pipe(
-        map(tracks => {
-          return tracks.items.map(item => {
+        map((tracks) => {
+          return tracks.items.map((item) => {
             const track = item.track;
             return {
               name: item.track.name,
@@ -32,7 +34,7 @@ export class PlaylistsService {
               uri: track.uri,
               images: track.album.images.slice(0, 1),
               artists: this.toArtistNames(track.artists),
-              duration_ms: track.duration_ms
+              duration_ms: track.duration_ms,
             };
           });
         })
@@ -40,7 +42,7 @@ export class PlaylistsService {
   }
 
   toArtistNames(artists) {
-    return artists.map(a => {
+    return artists.map((a) => {
       return { name: a.name };
     });
   }
