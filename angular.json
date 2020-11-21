@@ -95,9 +95,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "apps/web-portal/jest.config.js",
-            "tsConfig": "apps/web-portal/tsconfig.spec.json",
-            "setupFile": "apps/web-portal/src/test-setup.ts"
+            "jestConfig": "apps/web-portal/jest.config.js"
           }
         }
       }
@@ -148,9 +146,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/ngx-spotify/jest.config.js",
-            "tsConfig": "libs/ngx-spotify/tsconfig.spec.json",
-            "setupFile": "libs/ngx-spotify/src/test-setup.ts"
+            "jestConfig": "libs/ngx-spotify/jest.config.js"
           }
         }
       },
@@ -175,9 +171,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/web-portal-data/jest.config.js",
-            "tsConfig": "libs/web-portal-data/tsconfig.spec.json",
-            "setupFile": "libs/web-portal-data/src/test-setup.ts"
+            "jestConfig": "libs/web-portal-data/jest.config.js"
           }
         }
       },
@@ -206,9 +200,7 @@
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
-            "jestConfig": "libs/shared/utilities/jest.config.js",
-            "tsConfig": "libs/shared/utilities/tsconfig.spec.json",
-            "setupFile": "libs/shared/utilities/src/test-setup.ts"
+            "jestConfig": "libs/shared/utilities/jest.config.js"
           }
         }
       },
