@@ -230,9 +230,6 @@ THE SOFTWARE.
 ```
 
 
-iresa-web-portal
-MIT
-
 isarray
 MIT
 MIT License
