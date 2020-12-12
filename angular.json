@@ -31,7 +31,9 @@
               "apps/web-portal/src/styles.scss"
             ],
             "scripts": [],
-            "allowedCommonJsDependencies": ["qrcode"]
+            "allowedCommonJsDependencies": [
+              "qrcode"
+            ]
           },
           "configurations": {
             "production": {
@@ -44,7 +46,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
@@ -63,7 +64,10 @@
                 }
               ]
             }
-          }
+          },
+          "outputs": [
+            "{options.outputPath}"
+          ]
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -89,14 +93,20 @@
               "apps/web-portal/tsconfig.app.json",
               "apps/web-portal/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!apps/web-portal/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/web-portal/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "apps/web-portal/jest.config.js"
-          }
+          },
+          "outputs": [
+            "coverage/apps/web-portal"
+          ]
         }
       }
     },
@@ -121,8 +131,13 @@
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["apps/web-portal-e2e/tsconfig.e2e.json"],
-            "exclude": ["**/node_modules/**", "!apps/web-portal-e2e/**"]
+            "tsConfig": [
+              "apps/web-portal-e2e/tsconfig.e2e.json"
+            ],
+            "exclude": [
+              "**/node_modules/**",
+              "!apps/web-portal-e2e/**"
+            ]
           }
         }
       }
@@ -140,14 +155,20 @@
               "libs/ngx-spotify/tsconfig.lib.json",
               "libs/ngx-spotify/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/ngx-spotify/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/ngx-spotify/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/ngx-spotify/jest.config.js"
-          }
+          },
+          "outputs": [
+            "coverage/libs/ngx-spotify"
+          ]
         }
       },
       "schematics": {}
@@ -165,14 +186,20 @@
               "libs/web-portal-data/tsconfig.lib.json",
               "libs/web-portal-data/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/web-portal-data/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/web-portal-data/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/web-portal-data/jest.config.js"
-          }
+          },
+          "outputs": [
+            "coverage/libs/web-portal-data"
+          ]
         }
       },
       "schematics": {
@@ -194,14 +221,20 @@
               "libs/shared/utilities/tsconfig.lib.json",
               "libs/shared/utilities/tsconfig.spec.json"
             ],
-            "exclude": ["**/node_modules/**", "!libs/shared/utilities/**"]
+            "exclude": [
+              "**/node_modules/**",
+              "!libs/shared/utilities/**"
+            ]
           }
         },
         "test": {
           "builder": "@nrwl/jest:jest",
           "options": {
             "jestConfig": "libs/shared/utilities/jest.config.js"
-          }
+          },
+          "outputs": [
+            "coverage/libs/shared/utilities"
+          ]
         }
       },
       "schematics": {
